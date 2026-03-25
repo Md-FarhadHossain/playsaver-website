@@ -37,7 +37,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </Link>
         
         <header className="mb-12">
-          <time className="text-sm font-semibold tracking-wider text-rose-600 uppercase dark:text-rose-400">
+          <time className="text-sm font-semibold tracking-wider text-blue-600 uppercase dark:text-blue-400">
             {format(new Date(blog.created_at), 'MMMM d, yyyy')}
           </time>
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]">
@@ -51,7 +51,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         )}
 
-        <div className="prose prose-lg dark:prose-invert prose-rose max-w-none prose-headings:font-bold prose-a:text-rose-600 dark:prose-a:text-rose-400">
+        <div className="prose prose-lg dark:prose-invert prose-blue max-w-none prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {blog.content}
           </ReactMarkdown>

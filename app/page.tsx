@@ -6,10 +6,10 @@ import { SavingsCalculator } from "@/components/savings-calculator";
 import { SupportedPlatforms } from "@/components/supported-platforms";
 
 const SPEEDS = [
-  { label: "1.25×", color: "from-rose-500 to-orange-400", timeSaved: "20 min saved per hour", percent: "20%" },
-  { label: "1.5×", color: "from-orange-500 to-amber-400", timeSaved: "33 min saved per hour", percent: "33%" },
-  { label: "1.75×", color: "from-amber-500 to-yellow-400", timeSaved: "43 min saved per hour", percent: "43%" },
-  { label: "2×", color: "from-rose-400 to-amber-300", timeSaved: "30 min saved per hour", percent: "50%" },
+  { label: "1.25×", color: "from-blue-500 to-cyan-400", timeSaved: "20 min saved per hour", percent: "20%" },
+  { label: "1.5×", color: "from-cyan-500 to-teal-400", timeSaved: "33 min saved per hour", percent: "33%" },
+  { label: "1.75×", color: "from-teal-500 to-emerald-400", timeSaved: "43 min saved per hour", percent: "43%" },
+  { label: "2×", color: "from-blue-400 to-teal-300", timeSaved: "30 min saved per hour", percent: "50%" },
 ];
 
 const FEATURES = [
@@ -17,29 +17,29 @@ const FEATURES = [
     icon: Clock,
     title: "Real-Time Tracking",
     description: "See your time savings update live as you watch. No manual input required — PlaySaver works silently in the background.",
-    gradient: "from-rose-500/20 to-orange-600/5",
-    iconColor: "text-rose-500",
+    gradient: "from-blue-500/20 to-cyan-600/5",
+    iconColor: "text-blue-500",
   },
   {
     icon: BarChart3,
     title: "Beautiful Stats Dashboard",
     description: "Daily, weekly, and all-time breakdowns of the time you've reclaimed. Clean charts you'll actually enjoy opening.",
-    gradient: "from-orange-500/20 to-amber-600/5",
-    iconColor: "text-orange-500",
+    gradient: "from-cyan-500/20 to-teal-600/5",
+    iconColor: "text-cyan-500",
   },
   {
     icon: RefreshCw,
     title: "Cross-Device Sync",
     description: "Your savings follow you everywhere. Sign in once and your stats sync seamlessly across all your Chrome sessions.",
-    gradient: "from-amber-500/20 to-yellow-600/5",
-    iconColor: "text-amber-500",
+    gradient: "from-teal-500/20 to-emerald-600/5",
+    iconColor: "text-teal-500",
   },
   {
     icon: Zap,
     title: "Zero Performance Impact",
     description: "Engineered to be feather-light. PlaySaver never slows down your browser or interrupts your viewing experience.",
-    gradient: "from-rose-400/20 to-orange-500/5",
-    iconColor: "text-rose-400",
+    gradient: "from-blue-400/20 to-cyan-500/5",
+    iconColor: "text-blue-400",
   },
 ];
 
@@ -64,14 +64,14 @@ const FAQS = [
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-hidden selection:bg-rose-500/30">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden selection:bg-blue-500/30">
       {/* ─── Navbar ──────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2.5" aria-label="PlaySaver Home">
             <img src="/logo.svg" alt="PlaySaver Logo" className="h-8 w-8 drop-shadow-md" />
             <span className="text-lg font-bold tracking-tight text-foreground">
-              Play<span className="text-rose-500">Saver</span>
+              Play<span className="text-blue-500">Saver</span>
             </span>
           </a>
           <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
@@ -89,7 +89,7 @@ export default function Home() {
               href="https://chrome.google.com/webstore"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-600 to-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-rose-500/25 transition-all hover:scale-105 hover:shadow-rose-500/40 active:scale-95"
+              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95"
             >
               <Chrome size={15} />
               Add to Chrome
@@ -105,20 +105,20 @@ export default function Home() {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
           
           {/* Vibrant Glowing Blobs */}
-          <div className="absolute -top-[5%] left-1/2 -z-10 h-[400px] w-[500px] -translate-x-1/2 rounded-full bg-rose-500/25 blur-3xl sm:-top-[10%] sm:h-[600px] sm:w-[800px] dark:bg-rose-500/20" />
-          <div className="absolute -left-[10%] top-[5%] -z-10 h-[300px] w-[400px] rounded-full bg-orange-500/25 blur-3xl sm:h-[400px] sm:w-[500px] dark:bg-orange-500/20" />
-          <div className="absolute -right-[10%] top-[10%] -z-10 h-[350px] w-[400px] rounded-full bg-amber-500/25 blur-3xl sm:h-[450px] sm:w-[500px] dark:bg-amber-500/20" />
+          <div className="absolute -top-[5%] left-1/2 -z-10 h-[400px] w-[500px] -translate-x-1/2 rounded-full bg-blue-500/25 blur-3xl sm:-top-[10%] sm:h-[600px] sm:w-[800px] dark:bg-blue-500/20" />
+          <div className="absolute -left-[10%] top-[5%] -z-10 h-[300px] w-[400px] rounded-full bg-cyan-500/25 blur-3xl sm:h-[400px] sm:w-[500px] dark:bg-cyan-500/20" />
+          <div className="absolute -right-[10%] top-[10%] -z-10 h-[350px] w-[400px] rounded-full bg-teal-500/25 blur-3xl sm:h-[450px] sm:w-[500px] dark:bg-teal-500/20" />
         </div>
 
         {/* ─── Hero ─────────────────────────────────────────────── */}
         <section className="mx-auto max-w-7xl px-6 pt-24 pb-20 text-center md:pt-36 md:pb-28">
-          <div className="inline-flex items-center gap-2 rounded-full border border-rose-400/20 bg-rose-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-rose-500">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-500">
             <Star size={12} fill="currentColor" /> Now available · Free
           </div>
 
           <h1 className="mx-auto mt-6 max-w-3xl text-5xl font-extrabold leading-[1.1] tracking-tight text-foreground md:text-7xl">
             Watch smarter.{" "}
-            <span className="bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 bg-clip-text text-transparent">
               Reclaim your time.
             </span>
           </h1>
@@ -135,7 +135,7 @@ export default function Home() {
               href="https://chrome.google.com/webstore"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-rose-600 to-orange-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-rose-500/30 transition-all duration-200 hover:scale-105 hover:shadow-rose-500/50 active:scale-95"
+              className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-500/30 transition-all duration-200 hover:scale-105 hover:shadow-blue-500/50 active:scale-95"
             >
               <Chrome size={20} />
               Add to Chrome — It&apos;s Free
@@ -153,7 +153,7 @@ export default function Home() {
           <div className="mt-12 flex flex-col items-center gap-1 text-sm text-muted-foreground">
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={14} fill="currentColor" className="text-amber-400" />
+                <Star key={i} size={14} fill="currentColor" className="text-teal-400" />
               ))}
             </div>
             <span>Loved by <strong className="text-foreground">2,400+</strong> productivity-focused users</span>
@@ -203,10 +203,10 @@ export default function Home() {
             </div>
 
             {/* The math explained */}
-            <div className="mt-14 mx-auto max-w-2xl rounded-2xl border border-rose-400/20 bg-rose-500/5 p-6 text-center">
-              <p className="text-sm font-semibold uppercase tracking-widest text-rose-500">Simple maths, big results</p>
+            <div className="mt-14 mx-auto max-w-2xl rounded-2xl border border-blue-400/20 bg-blue-500/5 p-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-widest text-blue-500">Simple maths, big results</p>
               <p className="mt-3 text-4xl font-extrabold text-foreground">
-                1 hr at 1.5× = <span className="text-rose-500">20 min saved</span>
+                1 hr at 1.5× = <span className="text-blue-500">20 min saved</span>
               </p>
               <p className="mt-2 text-muted-foreground">
                 Watch 4 hours of YouTube this week at 1.5× and you&apos;ve saved{" "}
@@ -277,21 +277,21 @@ export default function Home() {
                   handle: "@sarahlearns",
                   text: "I watch all my Udemy courses at 1.75× and after a month PlaySaver told me I'd saved 6+ hours. Insane!",
                   avatar: "SM",
-                  color: "from-rose-500 to-orange-500",
+                  color: "from-blue-500 to-cyan-500",
                 },
                 {
                   name: "James K.",
                   handle: "@jkode",
                   text: "Such a simple idea but it genuinely motivates me to watch at faster speeds because I can see the time piling up.",
                   avatar: "JK",
-                  color: "from-orange-500 to-amber-500",
+                  color: "from-cyan-500 to-teal-500",
                 },
                 {
                   name: "Priya R.",
                   handle: "@priyatech",
                   text: "The UI is beautiful and it's the only extension I've kept enabled permanently. Lightweight and smart.",
                   avatar: "PR",
-                  color: "from-rose-400 to-amber-400",
+                  color: "from-blue-400 to-teal-400",
                 },
               ].map((t) => (
                 <div
@@ -300,7 +300,7 @@ export default function Home() {
                 >
                   <div className="mb-4 flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={13} fill="currentColor" className="text-amber-400" />
+                      <Star key={i} size={13} fill="currentColor" className="text-teal-400" />
                     ))}
                   </div>
                   <p className="leading-relaxed text-muted-foreground">&ldquo;{t.text}&rdquo;</p>
@@ -339,7 +339,7 @@ export default function Home() {
         {/* ─── Final CTA ─────────────────────────────────────────── */}
         <section className="py-24">
           <div className="mx-auto max-w-4xl px-6 text-center">
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-600 via-orange-600 to-amber-600 p-12 shadow-2xl shadow-rose-500/30">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 p-12 shadow-2xl shadow-blue-500/30">
               {/* decorative circles */}
               <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
               <div aria-hidden className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
@@ -357,7 +357,7 @@ export default function Home() {
                   href="https://chrome.google.com/webstore"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-base font-bold text-rose-600 shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
+                  className="flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-base font-bold text-blue-600 shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
                 >
                   <Chrome size={20} />
                   Add to Chrome — Free

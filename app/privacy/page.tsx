@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
           <a href="/" className="flex items-center gap-2.5" aria-label="PlaySaver Home">
             <img src="/logo.svg" alt="PlaySaver Logo" className="h-8 w-8 drop-shadow-md" />
             <span className="text-lg font-bold tracking-tight text-foreground">
-              Play<span className="text-rose-500">Saver</span>
+              Play<span className="text-blue-500">Saver</span>
             </span>
           </a>
           <div className="flex items-center gap-3">
@@ -34,13 +34,13 @@ export default function PrivacyPolicy() {
         {/* Background Effect */}
         <div className="absolute inset-x-0 top-0 -z-10 h-full overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-          <div className="absolute -top-[5%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-rose-600/20 blur-3xl" />
+          <div className="absolute -top-[5%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-3xl rounded-2xl border border-border/60 bg-background p-8 shadow-sm md:p-12">
           <div className="mb-10 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500/20 to-orange-500/20">
-              <Shield size={32} className="text-rose-500" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+              <Shield size={32} className="text-blue-500" />
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-foreground">Privacy Policy</h1>
             <p className="mt-4 text-lg text-muted-foreground italic">
@@ -67,7 +67,7 @@ export default function PrivacyPolicy() {
               <h2 className="mb-4 text-2xl font-bold text-foreground">2. Core Features</h2>
               <ul className="space-y-4">
                 <li className="flex gap-3">
-                  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500/10 text-rose-500">
+                  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-blue-500">
                     <Check size={14} />
                   </div>
                   <div>
@@ -94,9 +94,9 @@ export default function PrivacyPolicy() {
             </section>
 
             {/* 3. The <all_urls> Permission */}
-            <section className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-6">
+            <section className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-6">
               <div className="mb-3 flex items-center gap-2">
-                <Globe className="text-rose-500" size={20} />
+                <Globe className="text-blue-500" size={20} />
                 <h2 className="text-xl font-bold text-foreground">Why we need the &lt;all_urls&gt; Permission</h2>
               </div>
               <p className="leading-relaxed">
@@ -145,7 +145,7 @@ export default function PrivacyPolicy() {
                 <p className="text-sm">You can control exactly when this pop-up appears. There are three modes:</p>
                 <ul className="mt-3 space-y-3 text-sm">
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500/15 text-xs font-bold text-rose-500">1</span>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/15 text-xs font-bold text-blue-500">1</span>
                     <div>
                       <strong className="text-foreground">Always On</strong> — The pop-up stays visible and continuously updates in real time as time is being saved while you watch. Great for staying motivated throughout long videos.
                     </div>
@@ -164,7 +164,7 @@ export default function PrivacyPolicy() {
                   </li>
                 </ul>
               </div>
-              <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+              <div className="mt-4 rounded-xl border border-teal-500/20 bg-teal-500/5 p-4">
                 <p className="text-sm leading-relaxed">
                   <strong className="text-foreground">Why does this pop-up exist?</strong> The sole purpose of this feature is motivational. By showing you a live, tangible reward (the time you are getting back), it actively encourages you to keep your video speed up and build a productive viewing habit. It contains no ads, no tracking pixels, and does not communicate with any external service — it is purely a visual display of your locally computed savings.
                 </p>

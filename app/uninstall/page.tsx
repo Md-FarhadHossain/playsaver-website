@@ -48,7 +48,7 @@ export default function UninstallFeedbackPage() {
           <div className="flex items-center gap-2.5">
             <img src="/logo.svg" alt="PlaySaver Logo" className="h-8 w-8 drop-shadow-md" />
             <span className="text-lg font-bold tracking-tight text-foreground">
-              Play<span className="text-rose-500">Saver</span>
+              Play<span className="text-blue-500">Saver</span>
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -85,8 +85,8 @@ export default function UninstallFeedbackPage() {
             /* ─── Feedback Form ────────────────────────────────────── */
             <div className="rounded-3xl border border-border/60 bg-background/80 p-8 shadow-sm backdrop-blur-sm md:p-12">
               <div className="mb-8 text-center">
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/10">
-                  <Frown size={32} className="text-amber-500" />
+                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-teal-500/10">
+                  <Frown size={32} className="text-teal-500" />
                 </div>
                 <h1 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
                   We're sorry to see you go.
@@ -100,7 +100,7 @@ export default function UninstallFeedbackPage() {
                 {/* Options */}
                 <div className="space-y-3">
                   <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <AlertCircle size={16} className="text-rose-500" />
+                    <AlertCircle size={16} className="text-blue-500" />
                     What was the main reason you uninstalled? (Required)
                   </label>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -109,7 +109,7 @@ export default function UninstallFeedbackPage() {
                          key={reason.id}
                          className={`relative flex cursor-pointer rounded-xl border p-4 transition-all duration-200 hover:bg-muted/50 ${
                            selectedReason === reason.id 
-                             ? "border-rose-500 bg-rose-500/5 shadow-sm shadow-rose-500/10" 
+                             ? "border-blue-500 bg-blue-500/5 shadow-sm shadow-blue-500/10" 
                              : "border-border bg-background"
                          }`}
                       >
@@ -127,7 +127,7 @@ export default function UninstallFeedbackPage() {
                            </span>
                            <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
                               selectedReason === reason.id 
-                                ? "border-rose-500 bg-rose-500" 
+                                ? "border-blue-500 bg-blue-500" 
                                 : "border-muted-foreground/30"
                            }`}>
                              {selectedReason === reason.id && (
@@ -152,7 +152,7 @@ export default function UninstallFeedbackPage() {
                      placeholder={selectedReason === "broken" ? "Which site was it broken on?" : selectedReason === "other" ? "Please specify..." : "Any other thoughts you'd like to share with the developers?"}
                      value={feedbackText}
                      onChange={(e) => setFeedbackText(e.target.value)}
-                     className="w-full resize-none rounded-xl border border-border bg-background p-4 text-sm text-foreground focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
+                     className="w-full resize-none rounded-xl border border-border bg-background p-4 text-sm text-foreground focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                    />
                 </div>
 
