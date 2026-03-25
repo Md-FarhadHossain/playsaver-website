@@ -218,6 +218,101 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ─── Extension Visual Breakdown ────────────────────────────── */}
+        <section id="how-it-works" className="py-24 relative overflow-hidden">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-20 text-center">
+              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
+                See exactly how it works
+              </h2>
+              <p className="mx-auto mt-6 max-w-3xl text-lg text-muted-foreground">
+                PlaySaver is a smart extension that tracks exactly how much of your life you get back by watching YouTube videos at faster speeds, rewarding you with real-time stats and cloud-synced progress.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2 lg:gap-24">
+              {/* Left Side: The Image */}
+              <div className="relative lg:sticky lg:top-36">
+                <div className="absolute -inset-1 lg:-inset-4 rounded-[2.5rem] bg-gradient-to-tr from-blue-500/20 via-cyan-500/20 to-teal-500/20 blur-3xl opacity-70" aria-hidden="true" />
+                <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-background/50 backdrop-blur-xl shadow-2xl ring-1 ring-white/10">
+                  <div className="flex h-12 items-center gap-2 border-b border-border/50 bg-muted/30 px-5">
+                    <div className="flex gap-1.5">
+                      <div className="h-3.5 w-3.5 rounded-full bg-red-500/80" />
+                      <div className="h-3.5 w-3.5 rounded-full bg-amber-500/80" />
+                      <div className="h-3.5 w-3.5 rounded-full bg-emerald-500/80" />
+                    </div>
+                  </div>
+                  <img src="/extesion01.png" alt="PlaySaver Extension Interface" className="w-full h-auto" />
+                </div>
+              </div>
+
+              {/* Right Side: The Features Breakdown */}
+              <div className="space-y-12 py-4">
+                {/* 1 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-500 ring-1 ring-blue-500/40">1</div>
+                  <h3 className="text-2xl font-bold text-foreground">Time-Saved Tracking</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    The extension automatically detects when you watch a YouTube video at a faster playback speed (e.g., 1.5×, 2×) and calculates exactly how much real-world time you save.
+                  </p>
+                  <ul className="mt-5 space-y-3 text-base text-muted-foreground">
+                    <li><strong className="text-foreground">Total Time Saved:</strong> A lifetime counter showing total hours and minutes saved since installation.</li>
+                    <li><strong className="text-foreground">Saved Today:</strong> A daily counter that resets every midnight.</li>
+                  </ul>
+                </div>
+
+                {/* 2 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-cyan-500/10 text-sm font-bold text-cyan-500 ring-1 ring-cyan-500/40">2</div>
+                  <h3 className="text-2xl font-bold text-foreground">Live YouTube Overlay</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    While watching at a faster speed, a sleek, non-intrusive popup overlay sits on the YouTube video player itself (e.g., <code className="bg-muted px-1.5 py-0.5 rounded text-sm text-foreground">+3m 43s saved</code>).
+                  </p>
+                  <div className="mt-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4">
+                    <p className="text-sm font-medium text-foreground italic">
+                      "It gives you a rewarding, real-time visual indicator of the exact time you are getting back by being productive."
+                    </p>
+                  </div>
+                </div>
+
+                {/* 3 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-teal-500/10 text-sm font-bold text-teal-500 ring-1 ring-teal-500/40">3</div>
+                  <h3 className="text-2xl font-bold text-foreground">Display Mode Controls</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    Control exactly when you see the popup overlay directly from the dashboard:
+                  </p>
+                  <ul className="mt-5 space-y-3 text-base text-muted-foreground">
+                    <li><strong className="text-foreground">Always On:</strong> Stays visible continuously while playing above normal speed.</li>
+                    <li><strong className="text-foreground">Middle & End:</strong> Flashes briefly at the 50% mark and at the very end for a distraction-free experience.</li>
+                    <li><strong className="text-foreground">Hidden:</strong> Turns off the overlay completely (time is still tracked silently).</li>
+                  </ul>
+                </div>
+
+                {/* 4 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/10 text-sm font-bold text-emerald-500 ring-1 ring-emerald-500/40">4</div>
+                  <h3 className="text-2xl font-bold text-foreground">Cloud Sync & Account</h3>
+                  <ul className="mt-4 space-y-3 text-base text-muted-foreground leading-relaxed">
+                    <li><strong className="text-foreground">Google Sign-In:</strong> Safe and secure one-click authentication.</li>
+                    <li><strong className="text-foreground">Cross-Device Sync:</strong> Time saved is automatically backed up. Switch computers or reinstall without losing progress.</li>
+                    <li><strong className="text-foreground">Dashboard Access:</strong> Quick button taking you to <code className="bg-muted px-1.5 py-0.5 rounded text-sm">playsaver.org/dashboard</code> to view deeper stats.</li>
+                  </ul>
+                </div>
+
+                {/* 5 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-500 ring-1 ring-blue-500/40">5</div>
+                  <h3 className="text-2xl font-bold text-foreground">Smart Theming</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    The extension features a premium UI design that lets you toggle between Dark mode, Light mode, or automatically match your operating system's system settings.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ─── Features ──────────────────────────────────────────── */}
         <section id="features" className="py-20">
           <div className="mx-auto max-w-7xl px-6">
@@ -392,7 +487,7 @@ export default function Home() {
           <p>© {new Date().getFullYear()} PlaySaver. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="/privacy" className="transition-colors hover:text-foreground">Privacy</a>
-            <a href="#" className="transition-colors hover:text-foreground">Terms</a>
+            <a href="/terms" className="transition-colors hover:text-foreground">Terms</a>
             <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Chrome Store</a>
           </div>
         </div>

@@ -186,7 +186,7 @@ export default function PrivacyPolicy() {
            <p>© {new Date().getFullYear()} PlaySaver. All rights reserved.</p>
            <div className="flex gap-6">
              <a href="/privacy" className="transition-colors text-foreground">Privacy</a>
-             <a href="#" className="transition-colors hover:text-foreground">Terms</a>
+             <a href="/terms" className="transition-colors hover:text-foreground">Terms</a>
              <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Chrome Store</a>
            </div>
         </div>
