@@ -46,11 +46,9 @@ export default function UninstallFeedbackPage() {
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/30">
-              <Clock size={16} className="text-white" />
-            </div>
+            <img src="/logo.svg" alt="PlaySaver Logo" className="h-8 w-8 drop-shadow-md" />
             <span className="text-lg font-bold tracking-tight text-foreground">
-              Time<span className="text-violet-500">Saver</span>
+              Play<span className="text-rose-500">Saver</span>
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -74,7 +72,7 @@ export default function UninstallFeedbackPage() {
               </div>
               <h1 className="mb-2 text-3xl font-extrabold text-foreground">Thank you for your feedback!</h1>
               <p className="max-w-md text-muted-foreground">
-                We're sorry to see you go, but your input will directly help us improve TimeSaver for everyone else. Have a highly productive day!
+                We're sorry to see you go, but your input will directly help us improve PlaySaver for everyone else. Have a highly productive day!
               </p>
               <a
                 href="/"
@@ -94,7 +92,7 @@ export default function UninstallFeedbackPage() {
                   We're sorry to see you go.
                 </h1>
                 <p className="mt-4 text-base text-muted-foreground">
-                  TimeSaver has been successfully uninstalled. Could you take <strong className="text-foreground">30 seconds</strong> to tell us why? We read every single response.
+                  PlaySaver has been successfully uninstalled. Could you take <strong className="text-foreground">30 seconds</strong> to tell us why? We read every single response.
                 </p>
               </div>
 
@@ -102,7 +100,7 @@ export default function UninstallFeedbackPage() {
                 {/* Options */}
                 <div className="space-y-3">
                   <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <AlertCircle size={16} className="text-violet-500" />
+                    <AlertCircle size={16} className="text-rose-500" />
                     What was the main reason you uninstalled? (Required)
                   </label>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -111,7 +109,7 @@ export default function UninstallFeedbackPage() {
                          key={reason.id}
                          className={`relative flex cursor-pointer rounded-xl border p-4 transition-all duration-200 hover:bg-muted/50 ${
                            selectedReason === reason.id 
-                             ? "border-violet-500 bg-violet-500/5 shadow-sm shadow-violet-500/10" 
+                             ? "border-rose-500 bg-rose-500/5 shadow-sm shadow-rose-500/10" 
                              : "border-border bg-background"
                          }`}
                       >
@@ -129,7 +127,7 @@ export default function UninstallFeedbackPage() {
                            </span>
                            <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
                               selectedReason === reason.id 
-                                ? "border-violet-500 bg-violet-500" 
+                                ? "border-rose-500 bg-rose-500" 
                                 : "border-muted-foreground/30"
                            }`}>
                              {selectedReason === reason.id && (
@@ -154,7 +152,7 @@ export default function UninstallFeedbackPage() {
                      placeholder={selectedReason === "broken" ? "Which site was it broken on?" : selectedReason === "other" ? "Please specify..." : "Any other thoughts you'd like to share with the developers?"}
                      value={feedbackText}
                      onChange={(e) => setFeedbackText(e.target.value)}
-                     className="w-full resize-none rounded-xl border border-border bg-background p-4 text-sm text-foreground focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                     className="w-full resize-none rounded-xl border border-border bg-background p-4 text-sm text-foreground focus:border-rose-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
                    />
                 </div>
 

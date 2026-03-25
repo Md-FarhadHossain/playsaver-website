@@ -2,8 +2,8 @@ import { Clock, Shield, Globe, Lock, Check } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export const metadata = {
-  title: "Privacy Policy | TimeSaver",
-  description: "Privacy Policy for the TimeSaver Chrome Extension",
+  title: "Privacy Policy | PlaySaver",
+  description: "Privacy Policy for the PlaySaver Chrome Extension",
 };
 
 export default function PrivacyPolicy() {
@@ -12,12 +12,10 @@ export default function PrivacyPolicy() {
       {/* ─── Navbar ──────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <a href="/" className="flex items-center gap-2.5" aria-label="TimeSaver Home">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/30">
-              <Clock size={16} className="text-white" />
-            </div>
+          <a href="/" className="flex items-center gap-2.5" aria-label="PlaySaver Home">
+            <img src="/logo.svg" alt="PlaySaver Logo" className="h-8 w-8 drop-shadow-md" />
             <span className="text-lg font-bold tracking-tight text-foreground">
-              Time<span className="text-violet-500">Saver</span>
+              Play<span className="text-rose-500">Saver</span>
             </span>
           </a>
           <div className="flex items-center gap-3">
@@ -36,13 +34,13 @@ export default function PrivacyPolicy() {
         {/* Background Effect */}
         <div className="absolute inset-x-0 top-0 -z-10 h-full overflow-hidden" aria-hidden="true">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-          <div className="absolute -top-[5%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-violet-600/20 blur-3xl" />
+          <div className="absolute -top-[5%] left-1/2 -z-10 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-rose-600/20 blur-3xl" />
         </div>
 
         <div className="mx-auto max-w-3xl rounded-2xl border border-border/60 bg-background p-8 shadow-sm md:p-12">
           <div className="mb-10 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20">
-              <Shield size={32} className="text-violet-500" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500/20 to-orange-500/20">
+              <Shield size={32} className="text-rose-500" />
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-foreground">Privacy Policy</h1>
             <p className="mt-4 text-lg text-muted-foreground italic">
@@ -69,7 +67,7 @@ export default function PrivacyPolicy() {
               <h2 className="mb-4 text-2xl font-bold text-foreground">2. Core Features</h2>
               <ul className="space-y-4">
                 <li className="flex gap-3">
-                  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-500/10 text-violet-500">
+                  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500/10 text-rose-500">
                     <Check size={14} />
                   </div>
                   <div>
@@ -96,9 +94,9 @@ export default function PrivacyPolicy() {
             </section>
 
             {/* 3. The <all_urls> Permission */}
-            <section className="rounded-xl border border-violet-500/20 bg-violet-500/5 p-6">
+            <section className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-6">
               <div className="mb-3 flex items-center gap-2">
-                <Globe className="text-violet-500" size={20} />
+                <Globe className="text-rose-500" size={20} />
                 <h2 className="text-xl font-bold text-foreground">Why we need the &lt;all_urls&gt; Permission</h2>
               </div>
               <p className="leading-relaxed">
@@ -113,7 +111,7 @@ export default function PrivacyPolicy() {
                 <h2 className="text-2xl font-bold text-foreground">Data Collection and Usage</h2>
               </div>
               <p className="mb-4">
-                We believe in keeping things simple and private. Since TimeSaver acts as a productivity tool that crosses your devices, here is what you need to know about your data:
+                We believe in keeping things simple and private. Since PlaySaver acts as a productivity tool that crosses your devices, here is what you need to know about your data:
               </p>
               <div className="space-y-4 rounded-xl border border-border/50 bg-muted/20 p-6">
                 <div>
@@ -126,7 +124,7 @@ export default function PrivacyPolicy() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">How your data is used</h3>
-                  <p className="mt-1 text-sm">Your data is strictly used to power your own TimeSaver dashboard and display your personal stats. We never sell, trade, or share your information with any third parties.</p>
+                  <p className="mt-1 text-sm">Your data is strictly used to power your own PlaySaver dashboard and display your personal stats. We never sell, trade, or share your information with any third parties.</p>
                 </div>
               </div>
             </section>
@@ -140,14 +138,14 @@ export default function PrivacyPolicy() {
                 <h2 className="text-2xl font-bold text-foreground">In-Video Time-Saved Pop-Up</h2>
               </div>
               <p className="mb-5 leading-relaxed">
-                While you watch a video, TimeSaver optionally displays a small, non-intrusive overlay in the corner of the video player  showing exactly how many minutes and seconds you have saved so far in that session (e.g. <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono border border-border">+2m 28s saved</code>).
+                While you watch a video, PlaySaver optionally displays a small, non-intrusive overlay in the corner of the video player  showing exactly how many minutes and seconds you have saved so far in that session (e.g. <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono border border-border">+2m 28s saved</code>).
               </p>
               <div className="space-y-3 rounded-xl border border-border/50 bg-muted/20 p-6">
                 <h3 className="font-semibold text-foreground">Display Mode Options</h3>
                 <p className="text-sm">You can control exactly when this pop-up appears. There are three modes:</p>
                 <ul className="mt-3 space-y-3 text-sm">
                   <li className="flex gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-500/15 text-xs font-bold text-violet-500">1</span>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-rose-500/15 text-xs font-bold text-rose-500">1</span>
                     <div>
                       <strong className="text-foreground">Always On</strong> — The pop-up stays visible and continuously updates in real time as time is being saved while you watch. Great for staying motivated throughout long videos.
                     </div>
@@ -181,13 +179,11 @@ export default function PrivacyPolicy() {
       <footer className="border-t border-border/50 py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-sm text-muted-foreground md:flex-row">
            <div className="flex items-center gap-2">
-             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500">
-               <Clock size={12} className="text-white" />
-             </div>
-             <span className="font-semibold text-foreground">TimeSaver</span>
+             <img src="/logo.svg" alt="PlaySaver Logo" className="h-6 w-6 drop-shadow-sm" />
+             <span className="font-semibold text-foreground">PlaySaver</span>
              <span>— Watch smarter.</span>
            </div>
-           <p>© {new Date().getFullYear()} TimeSaver. All rights reserved.</p>
+           <p>© {new Date().getFullYear()} PlaySaver. All rights reserved.</p>
            <div className="flex gap-6">
              <a href="/privacy" className="transition-colors text-foreground">Privacy</a>
              <a href="#" className="transition-colors hover:text-foreground">Terms</a>

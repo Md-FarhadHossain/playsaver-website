@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwt, type JwtPayload } from "./auth";
 
-export const SESSION_COOKIE = "timesaver_session";
+export const SESSION_COOKIE = "playsaver_session";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days in seconds
 
 // ── Cookie Setters ────────────────────────────────────────────────────────

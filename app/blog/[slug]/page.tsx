@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!blog || !blog.published) return { title: "Not Found" };
   
   return {
-    title: blog.meta_title || `${blog.title} - TimeSaver`,
+    title: blog.meta_title || `${blog.title} - PlaySaver`,
     description: blog.meta_desc || blog.excerpt || blog.title,
     openGraph: {
       images: blog.image_url ? [{ url: blog.image_url }] : [],
@@ -37,7 +37,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </Link>
         
         <header className="mb-12">
-          <time className="text-sm font-semibold tracking-wider text-violet-600 uppercase dark:text-violet-400">
+          <time className="text-sm font-semibold tracking-wider text-rose-600 uppercase dark:text-rose-400">
             {format(new Date(blog.created_at), 'MMMM d, yyyy')}
           </time>
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]">
@@ -51,7 +51,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         )}
 
-        <div className="prose prose-lg dark:prose-invert prose-violet max-w-none prose-headings:font-bold prose-a:text-violet-600 dark:prose-a:text-violet-400">
+        <div className="prose prose-lg dark:prose-invert prose-rose max-w-none prose-headings:font-bold prose-a:text-rose-600 dark:prose-a:text-rose-400">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {blog.content}
           </ReactMarkdown>
