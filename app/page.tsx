@@ -69,9 +69,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2.5" aria-label="TimeSaver Home">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/30">
-              <Clock size={16} className="text-white" />
-            </div>
+            <img src="/logo.svg" alt="TimeSaver Logo" className="h-8 w-8 drop-shadow-md" />
             <span className="text-lg font-bold tracking-tight text-foreground">
               Time<span className="text-violet-500">Saver</span>
             </span>
@@ -387,9 +385,7 @@ export default function Home() {
       <footer className="border-t border-border/50 py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-sm text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-fuchsia-500">
-              <Clock size={12} className="text-white" />
-            </div>
+            <img src="/logo.svg" alt="TimeSaver Logo" className="h-6 w-6 drop-shadow-sm" />
             <span className="font-semibold text-foreground">TimeSaver</span>
             <span>— Watch smarter.</span>
           </div>

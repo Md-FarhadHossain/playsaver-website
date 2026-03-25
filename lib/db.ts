@@ -148,20 +148,49 @@ export interface UserStats {
 }
 
 export async function getUserStats(userId: string): Promise<UserStats | null> {
-  const result = await db.execute({
-    sql: `SELECT * FROM user_stats WHERE user_id = ?`,
+  // Primary: read from user_stats table — written by the extension backend
+  const primary = await db.execute({
+    sql: `SELECT user_id, email, name, total_ms, synced_at
+          FROM user_stats
+          WHERE user_id = ?`,
     args: [userId],
   });
-  
-  if (result.rows.length === 0) return null;
-  const row = result.rows[0] as Record<string, unknown>;
-  
+
+  if (primary.rows.length > 0) {
+    const row = primary.rows[0] as Record<string, unknown>;
+    return {
+      user_id:  String(row.user_id),
+      email:    String(row.email),
+      name:     String(row.name),
+      total_ms: Number(row.total_ms ?? 0),
+      synced_at: String(row.synced_at ?? new Date().toISOString()),
+    };
+  }
+
+  // Fallback: aggregate from the time_saved table (legacy, may be empty)
+  const fallback = await db.execute({
+    sql: `SELECT
+            u.id        AS user_id,
+            u.email     AS email,
+            u.name      AS name,
+            COALESCE(SUM(ts.seconds), 0) * 1000 AS total_ms,
+            MAX(ts.created_at) AS synced_at
+          FROM users u
+          LEFT JOIN time_saved ts ON ts.user_id = u.id
+          WHERE u.id = ?
+          GROUP BY u.id, u.email, u.name`,
+    args: [userId],
+  });
+
+  if (fallback.rows.length === 0) return null;
+  const row = fallback.rows[0] as Record<string, unknown>;
+
   return {
-    user_id: String(row.user_id),
-    email: String(row.email),
-    name: String(row.name),
+    user_id:  String(row.user_id),
+    email:    String(row.email),
+    name:     String(row.name),
     total_ms: Number(row.total_ms ?? 0),
-    synced_at: String(row.synced_at),
+    synced_at: String(row.synced_at ?? new Date().toISOString()),
   };
 }
 

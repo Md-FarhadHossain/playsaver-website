@@ -21,7 +21,7 @@ export function SignInButton({ className }: { className?: string }) {
 
   const handleSignIn = () => {
     setLoading(true);
-    const appUrl = window.location.origin;
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
     const params = new URLSearchParams({
       client_id:     GOOGLE_CLIENT_ID,
       redirect_uri:  `${appUrl}/api/auth/google/callback`,
