@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ProductivityLevel } from "@/lib/productivity";
+import { ProductivityLevel, getTimeEquivalence } from "@/lib/productivity";
 import { ArrowRight } from "lucide-react";
 
 interface HeroCardProps {
@@ -17,7 +17,7 @@ export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, u
   const mins = minutesSaved % 60;
   const minsToNext = nextLevel ? (nextLevel.threshold - minutesSaved).toLocaleString() : null;
 
-  const phaseNames: Record<number, string> = { 1: "Amber", 2: "Blue", 3: "Purple", 4: "Crimson" };
+  const phaseNames: Record<number, string> = { 1: "Initiate", 2: "Momentum", 3: "Mastery", 4: "Legend" };
 
   return (
     <div
@@ -55,8 +55,8 @@ export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, u
           <div>
             <div className="flex items-baseline gap-3">
               <span
-                className="text-[13px] font-black uppercase tracking-[0.15em] opacity-60"
-                style={{ color: currentLevel.color }}
+                className="inline-flex items-center justify-center rounded-lg px-2.5 py-1 text-[12px] font-black uppercase tracking-[0.2em] text-white shadow-xl"
+                style={{ backgroundColor: currentLevel.color, boxShadow: `0 4px 20px -5px ${currentLevel.color}` }}
               >
                 Level {currentLevel.id}
               </span>
@@ -114,7 +114,17 @@ export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, u
               <span className="text-6xl font-black tabular-nums text-foreground leading-none">{String(mins).padStart(2, "0")}</span>
               <span className="mb-1.5 text-2xl font-bold text-muted-foreground">m</span>
             </div>
-            <p className="text-[11px] text-muted-foreground/70">{minutesSaved.toLocaleString()} minutes total</p>
+            <div 
+              className="mt-3 inline-flex max-w-[260px] items-center justify-end rounded-xl border px-3.5 py-2.5 text-right shadow-sm backdrop-blur-md"
+              style={{
+                borderColor: `${currentLevel.color}40`,
+                backgroundColor: `${currentLevel.color}15`,
+              }}
+            >
+              <p className="text-[12px] font-bold leading-snug text-foreground/90" style={{ textShadow: `0 2px 10px ${currentLevel.color}30` }}>
+                {getTimeEquivalence(minutesSaved)}
+              </p>
+            </div>
           </div>
         </div>
       </div>

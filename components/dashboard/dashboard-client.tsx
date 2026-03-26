@@ -58,15 +58,13 @@ export function DashboardClient({ initialStats }: DashboardClientProps) {
 
           {/* User pill */}
           <div className="flex items-center gap-2.5 rounded-full border border-border bg-muted/30 px-3.5 py-1.5 text-xs font-medium backdrop-blur">
-            <span className="font-semibold">{stats.username}</span>
-            <span className="h-3 w-px bg-border" />
             <span
-              className="flex h-4.5 w-4.5 items-center justify-center rounded-md text-[9px] font-black text-white px-1"
-              style={{ backgroundColor: currentLevel.color }}
+              className="flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-black text-white px-1"
+              style={{ backgroundColor: currentLevel.color, boxShadow: `0 0 10px ${currentLevel.color}60` }}
             >
               {currentLevel.id}
             </span>
-            <span className="hidden sm:block text-muted-foreground">{currentLevel.name}</span>
+            <span className="hidden sm:block font-bold text-foreground">{currentLevel.name}</span>
           </div>
 
           <div className="flex items-center gap-2">
