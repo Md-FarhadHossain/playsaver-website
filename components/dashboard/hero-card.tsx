@@ -10,9 +10,10 @@ interface HeroCardProps {
   progressPct: number;
   minutesSaved: number;
   username: string;
+  joinedAt: Date;
 }
 
-export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, username }: HeroCardProps) {
+export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, username, joinedAt }: HeroCardProps) {
   const hours = Math.floor(minutesSaved / 60);
   const mins = minutesSaved % 60;
   const minsToNext = nextLevel ? (nextLevel.threshold - minutesSaved).toLocaleString() : null;
@@ -48,7 +49,9 @@ export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, u
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/70" />
               Phase {currentLevel.phase} · {phaseNames[currentLevel.phase]}
             </span>
-            <span className="text-[11px] text-muted-foreground font-medium">Welcome back, <strong className="text-foreground">{username}</strong></span>
+            <span className="text-[11px] text-muted-foreground font-medium">
+              Welcome back, <strong className="text-foreground">{username}</strong> <span className="mx-1.5 opacity-40">•</span> <span className="opacity-80">Member since {joinedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+            </span>
           </div>
 
           {/* Big level title */}

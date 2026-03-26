@@ -7,18 +7,21 @@ import { motion } from "framer-motion";
 import { getCurrentLevel, GamifiedUserStats, BADGES, LEVELS } from "@/lib/productivity";
 import { HeroCard } from "@/components/dashboard/hero-card";
 import { LevelJourney } from "@/components/dashboard/level-journey";
+import { Leaderboard } from "@/components/dashboard/leaderboard";
 import { BadgeCollection } from "@/components/dashboard/badge-collection";
-import { LoyaltyTimeline } from "@/components/dashboard/loyalty-timeline";
 import { LevelUpModal } from "@/components/dashboard/level-up-modal";
 import { BadgeToast } from "@/components/dashboard/badge-toast";
 
+import { LeaderboardUser } from "@/lib/db";
+
 interface DashboardClientProps {
   initialStats: GamifiedUserStats;
+  leaderboard: LeaderboardUser[];
 }
 
 const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
 
-export function DashboardClient({ initialStats }: DashboardClientProps) {
+export function DashboardClient({ initialStats, leaderboard }: DashboardClientProps) {
   const [stats, setStats] = useState(initialStats);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [activeToastBadge, setActiveToastBadge] = useState<any | null>(null);
@@ -85,6 +88,7 @@ export function DashboardClient({ initialStats }: DashboardClientProps) {
             progressPct={progress}
             minutesSaved={stats.totalMinutesSaved}
             username={stats.username}
+            joinedAt={stats.joinedAt}
           />
         </motion.div>
 
@@ -97,7 +101,7 @@ export function DashboardClient({ initialStats }: DashboardClientProps) {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <LevelJourney currentLevelId={currentLevel.id} phaseColor={currentLevel.color} />
-          <LoyaltyTimeline joinedAt={stats.joinedAt} />
+          <Leaderboard leaderboard={leaderboard} currentUserId={stats.userId} />
         </motion.div>
 
         {/* ROW 3 — Badges Full Width */}

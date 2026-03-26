@@ -194,6 +194,43 @@ export async function getUserStats(userId: string): Promise<UserStats | null> {
   };
 }
 
+export interface LeaderboardUser {
+  userId: string;
+  name: string;
+  avatar: string | null;
+  totalMinutesSaved: number;
+}
+
+export async function getLeaderboard(limit = 10): Promise<LeaderboardUser[]> {
+  try {
+    const result = await db.execute({
+      sql: `
+        SELECT 
+          u.id as userId, 
+          u.name, 
+          u.email,
+          u.avatar, 
+          COALESCE(us.total_ms, (SELECT SUM(seconds)*1000 FROM time_saved WHERE user_id = u.id), 0) as total_ms
+        FROM users u
+        LEFT JOIN user_stats us ON u.id = us.user_id
+        ORDER BY total_ms DESC
+        LIMIT ?
+      `,
+      args: [limit],
+    });
+
+    return result.rows.map(row => ({
+      userId: String(row.userId),
+      name: row.name ? String(row.name) : String(row.email).split('@')[0],
+      avatar: row.avatar ? String(row.avatar) : null,
+      totalMinutesSaved: Math.floor(Number(row.total_ms ?? 0) / 60000)
+    }));
+  } catch (err) {
+    console.error("Failed to fetch leaderboard", err);
+    return [];
+  }
+}
+
 // ── Blog helpers ──────────────────────────────────────────────────────────
 
 export interface DbBlog {
