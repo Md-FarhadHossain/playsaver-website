@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { LeaderboardUser } from "@/lib/db";
-import { Trophy, Medal, Award } from "lucide-react";
+import { Trophy, Medal, Award, MoreVertical } from "lucide-react";
+import React from "react";
 
 interface LeaderboardProps {
   leaderboard: LeaderboardUser[];
@@ -45,16 +46,24 @@ export function Leaderboard({ leaderboard, currentUserId }: LeaderboardProps) {
           leaderboard.map((user, index) => {
             const isCurrentUser = user.userId === currentUserId;
             
-            // Medals
+            // Medals based on True Global Rank
             let medalNode = null;
-            if (index === 0) medalNode = <Trophy size={16} className="text-yellow-400" />;
-            else if (index === 1) medalNode = <Medal size={16} className="text-slate-300" />;
-            else if (index === 2) medalNode = <Award size={16} className="text-amber-600" />;
-            else medalNode = <span className="text-xs font-bold text-muted-foreground w-4 text-center">{index + 1}</span>;
+            if (user.rank === 1) medalNode = <Trophy size={16} className="text-yellow-400" />;
+            else if (user.rank === 2) medalNode = <Medal size={16} className="text-slate-300" />;
+            else if (user.rank === 3) medalNode = <Award size={16} className="text-amber-600" />;
+            else medalNode = <span className="text-xs font-bold text-muted-foreground w-4 text-center">{user.rank}</span>;
+
+            // Render a divider if there's a huge gap in rankings
+            const isGap = index > 0 && user.rank > leaderboard[index - 1].rank + 1;
 
             return (
-              <motion.div
-                key={user.userId}
+              <React.Fragment key={user.userId}>
+                {isGap && (
+                  <div className="flex justify-center py-1 opacity-40">
+                    <MoreVertical size={16} className="text-muted-foreground" />
+                  </div>
+                )}
+                <motion.div
                 className={`flex items-center justify-between rounded-xl px-4 py-3 transition-colors ${
                   isCurrentUser ? "bg-blue-500/10 ring-1 ring-blue-500/30" : "bg-muted/40 hover:bg-muted"
                 }`}
@@ -89,6 +98,7 @@ export function Leaderboard({ leaderboard, currentUserId }: LeaderboardProps) {
                   </span>
                 </div>
               </motion.div>
+              </React.Fragment>
             );
           })
         )}

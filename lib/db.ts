@@ -199,31 +199,45 @@ export interface LeaderboardUser {
   name: string;
   avatar: string | null;
   totalMinutesSaved: number;
+  rank: number;
 }
 
-export async function getLeaderboard(limit = 10): Promise<LeaderboardUser[]> {
+export async function getLeaderboard(limit = 10, currentUserId?: string): Promise<LeaderboardUser[]> {
   try {
-    const result = await db.execute({
-      sql: `
+    const sql = `
+      WITH RankedUsers AS (
         SELECT 
           u.id as userId, 
           u.name, 
           u.email,
           u.avatar, 
-          COALESCE(us.total_ms, (SELECT SUM(seconds)*1000 FROM time_saved WHERE user_id = u.id), 0) as total_ms
+          COALESCE(us.total_ms, (SELECT SUM(seconds)*1000 FROM time_saved WHERE user_id = u.id), 0) as total_ms,
+          RANK() OVER (ORDER BY COALESCE(us.total_ms, (SELECT SUM(seconds)*1000 FROM time_saved WHERE user_id = u.id), 0) DESC) as ranking
         FROM users u
         LEFT JOIN user_stats us ON u.id = us.user_id
-        ORDER BY total_ms DESC
-        LIMIT ?
-      `,
-      args: [limit],
-    });
+      )
+      SELECT * FROM (
+        SELECT * FROM RankedUsers ORDER BY ranking ASC, userId ASC LIMIT ?
+      )
+      ${currentUserId ? `
+      UNION
+      SELECT * FROM RankedUsers WHERE userId = ? AND userId NOT IN (
+        SELECT userId FROM RankedUsers ORDER BY ranking ASC, userId ASC LIMIT ?
+      )
+      ` : ''}
+      ORDER BY ranking ASC, userId ASC
+    `;
+
+    const args = currentUserId ? [limit, currentUserId, limit] : [limit];
+
+    const result = await db.execute({ sql, args });
 
     return result.rows.map(row => ({
       userId: String(row.userId),
       name: row.name ? String(row.name) : String(row.email).split('@')[0],
       avatar: row.avatar ? String(row.avatar) : null,
-      totalMinutesSaved: Math.floor(Number(row.total_ms ?? 0) / 60000)
+      totalMinutesSaved: Math.floor(Number(row.total_ms ?? 0) / 60000),
+      rank: Number(row.ranking)
     }));
   } catch (err) {
     console.error("Failed to fetch leaderboard", err);

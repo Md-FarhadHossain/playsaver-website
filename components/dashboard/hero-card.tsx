@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ProductivityLevel, getTimeEquivalence } from "@/lib/productivity";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 interface HeroCardProps {
   currentLevel: ProductivityLevel;
@@ -39,66 +39,62 @@ export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, u
 
       <div className="relative flex flex-col gap-8 p-7 md:flex-row md:items-end md:justify-between">
         {/* LEFT — Identity */}
-        <div className="flex-1 space-y-5">
-          {/* Phase badge */}
-          <div className="flex items-center gap-3">
-            <span
-              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white"
-              style={{ background: `linear-gradient(135deg, ${currentLevel.color}dd, ${currentLevel.color}88)` }}
-            >
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/70" />
-              Phase {currentLevel.phase} · {phaseNames[currentLevel.phase]}
+        <div className="flex-1 space-y-7">
+          {/* Greeting */}
+          <div className="flex items-center gap-2">
+            <span className="text-[13px] font-medium text-muted-foreground">
+              Welcome back, <strong className="text-foreground">{username}</strong>
             </span>
-            <span className="text-[11px] text-muted-foreground font-medium">
-              Welcome back, <strong className="text-foreground">{username}</strong> <span className="mx-1.5 opacity-40">•</span> <span className="opacity-80">Member since {joinedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+            <span className="text-muted-foreground/30">•</span>
+            <span className="text-[13px] text-muted-foreground/80">
+              Member since {joinedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
             </span>
           </div>
 
-          {/* Big level title */}
+          {/* Rank Title */}
           <div>
-            <div className="flex items-baseline gap-3">
-              <span
-                className="inline-flex items-center justify-center rounded-lg px-2.5 py-1 text-[12px] font-black uppercase tracking-[0.2em] text-white shadow-xl"
-                style={{ backgroundColor: currentLevel.color, boxShadow: `0 4px 20px -5px ${currentLevel.color}` }}
+            <div className="mb-2.5 flex items-center gap-2.5">
+              <span 
+                className="inline-flex items-center justify-center rounded-lg px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-lg"
+                style={{ backgroundColor: currentLevel.color, boxShadow: `0 4px 15px -4px ${currentLevel.color}` }}
               >
                 Level {currentLevel.id}
               </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80" style={{ color: currentLevel.color }}>
+                Current Rank
+              </span>
             </div>
             <h1
-              className="mt-1 text-5xl font-black tracking-tight text-foreground sm:text-6xl"
+              className="mt-1 text-4xl font-black tracking-tight text-foreground sm:text-5xl"
               style={{ textShadow: `0 0 60px ${currentLevel.color}30` }}
             >
               {currentLevel.name}
             </h1>
-            <p className="mt-2 text-base text-muted-foreground max-w-md">{currentLevel.subtitle}</p>
           </div>
 
-          {/* XP Progress */}
-          <div className="max-w-lg space-y-2">
-            <div className="flex items-center justify-between text-xs font-semibold">
-              <span className="text-muted-foreground">
-                XP Progress{nextLevel ? ` → Level ${nextLevel.id}` : " · Max Level"}
-              </span>
-              <span style={{ color: currentLevel.color }}>{Math.round(progressPct)}%</span>
+          {/* Minimal Progress Bar */}
+          {nextLevel && (
+            <div className="max-w-md pt-2">
+              <div className="mb-2.5 flex items-center justify-between text-xs font-bold">
+                <span className="text-muted-foreground">
+                  Next: <span className="text-foreground tracking-tight">{nextLevel.name}</span>
+                </span>
+                <span style={{ color: currentLevel.color }}>{minsToNext} mins left</span>
+              </div>
+              <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted/60">
+                <motion.div
+                  className="absolute inset-y-0 left-0 rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, ${currentLevel.color}aa, ${currentLevel.color})`,
+                    boxShadow: `0 0 12px ${currentLevel.color}60`,
+                  }}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.max(2, progressPct)}%` }}
+                  transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                />
+              </div>
             </div>
-            <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted/60">
-              <motion.div
-                className="absolute inset-y-0 left-0 rounded-full"
-                style={{
-                  background: `linear-gradient(90deg, ${currentLevel.color}bb, ${currentLevel.color})`,
-                  boxShadow: `0 0 12px 1px ${currentLevel.color}60`,
-                }}
-                initial={{ width: 0 }}
-                animate={{ width: `${Math.max(1.5, progressPct)}%` }}
-                transition={{ duration: 1.8, ease: [0.25, 1, 0.5, 1], delay: 0.4 }}
-              />
-            </div>
-            {minsToNext && (
-              <p className="text-[11px] text-muted-foreground/70">
-                <strong className="text-foreground">{minsToNext}</strong> mins until <strong className="text-foreground">{nextLevel?.name}</strong>
-              </p>
-            )}
-          </div>
+          )}
         </div>
 
         {/* RIGHT — Big time stat */}
@@ -117,18 +113,39 @@ export function HeroCard({ currentLevel, nextLevel, progressPct, minutesSaved, u
               <span className="text-6xl font-black tabular-nums text-foreground leading-none">{String(mins).padStart(2, "0")}</span>
               <span className="mb-1.5 text-2xl font-bold text-muted-foreground">m</span>
             </div>
-            <div 
-              className="mt-3 inline-flex max-w-[260px] items-center justify-end rounded-xl border px-3.5 py-2.5 text-right shadow-sm backdrop-blur-md"
-              style={{
-                borderColor: `${currentLevel.color}40`,
-                backgroundColor: `${currentLevel.color}15`,
-              }}
-            >
-              <p className="text-[12px] font-bold leading-snug text-foreground/90" style={{ textShadow: `0 2px 10px ${currentLevel.color}30` }}>
-                {getTimeEquivalence(minutesSaved)}
-              </p>
-            </div>
           </div>
+        </div>
+      </div>
+
+      {/* ── BOTTOM STRIP: EMOTIONAL ROI REWARD ── */}
+      <div 
+        className="relative border-t px-7 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+        style={{
+          borderColor: `${currentLevel.color}20`,
+          background: `linear-gradient(90deg, ${currentLevel.color}10, transparent 60%)`,
+        }}
+      >
+        <div className="flex items-center gap-4">
+          <div 
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl shadow-lg ring-1 transition-all duration-500"
+            style={{ 
+              backgroundColor: `${currentLevel.color}15`, 
+              boxShadow: `0 0 20px -5px ${currentLevel.color}` 
+            }}
+          >
+            <Sparkles size={22} style={{ color: currentLevel.color }} />
+          </div>
+          <div>
+            <span className="block text-[10px] font-black uppercase tracking-[0.2em] mb-1 opacity-80" style={{ color: currentLevel.color }}>
+              The Real Reward
+            </span>
+            <p className="text-lg sm:text-xl font-bold text-foreground tracking-tight drop-shadow-sm">
+              {getTimeEquivalence(minutesSaved)}
+            </p>
+          </div>
+        </div>
+        <div className="hidden md:block opacity-30">
+           <ArrowRight size={24} style={{ color: currentLevel.color }} />
         </div>
       </div>
     </div>

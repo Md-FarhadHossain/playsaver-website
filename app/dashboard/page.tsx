@@ -17,7 +17,7 @@ export default async function GamifiedDashboardPage() {
   }
 
   const userStats = await getUserStats(session.sub);
-  const leaderboard = await getLeaderboard(5); // Top 5 users
+  const leaderboard = await getLeaderboard(5, session.sub); // Top 5 + current user
 
   // Generate the deterministic full gamified profile using real metrics
   const gamifiedStats = generateGamifiedStats(userStats, dbUser);

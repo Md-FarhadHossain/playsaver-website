@@ -40,14 +40,15 @@ export const LEVELS: ProductivityLevel[] = [
 ];
 
 export function getCurrentLevel(minutesSaved: number) {
-  const current = [...LEVELS].reverse().find(l => minutesSaved >= l.threshold) || LEVELS[0];
-  const next = LEVELS.find(l => l.threshold > minutesSaved);
+  const currentId = [...LEVELS].reverse().find(l => minutesSaved >= l.threshold)?.id || LEVELS[0].id;
+  const current = LEVELS.find(l => l.id === currentId)!;
+  const next = LEVELS.find(l => l.id === currentId + 1);
   
   let progress = 100;
   if (next) {
     const range = next.threshold - current.threshold;
-    const progressInTier = minutesSaved - current.threshold;
-    progress = Math.min(100, Math.max(0, (progressInTier / range) * 100));
+    const progressInTier = Math.max(0, minutesSaved - current.threshold);
+    progress = range > 0 ? Math.min(100, Math.max(0, (progressInTier / range) * 100)) : 100;
   }
   
   return { current, next, progress };
