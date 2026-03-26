@@ -79,6 +79,7 @@ export default function Home() {
             <a href="#features" className="transition-colors hover:text-foreground">Features</a>
             <a href="/blog" className="transition-colors hover:text-foreground">Blog</a>
             <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
+            <a href="/feedback" className="transition-colors hover:text-foreground">Feedback</a>
           </nav>
           <div className="flex items-center gap-3">
             <ThemeToggle />
@@ -486,6 +487,7 @@ export default function Home() {
           </div>
           <p>© {new Date().getFullYear()} PlaySaver. All rights reserved.</p>
           <div className="flex gap-6">
+            <a href="/feedback" className="transition-colors hover:text-foreground">Feedback</a>
             <a href="/privacy" className="transition-colors hover:text-foreground">Privacy</a>
             <a href="/terms" className="transition-colors hover:text-foreground">Terms</a>
             <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Chrome Store</a>

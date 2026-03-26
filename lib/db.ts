@@ -53,9 +53,9 @@ export async function initDb() {
       updated_at  TEXT DEFAULT (datetime('now'))
     );
 
-    CREATE TABLE IF NOT EXISTS uninstall_feedback (
+    CREATE TABLE IF NOT EXISTS feedback (
       id          TEXT PRIMARY KEY,
-      reason      TEXT NOT NULL,
+      topic       TEXT NOT NULL,
       details     TEXT,
       created_at  TEXT DEFAULT (datetime('now'))
     );
@@ -309,6 +309,32 @@ export interface DbUninstallFeedback {
 export async function getAllUninstallFeedback(): Promise<DbUninstallFeedback[]> {
   const result = await db.execute({
     sql: "SELECT * FROM uninstall_feedback ORDER BY created_at DESC",
+    args: [],
+  });
+  return result.rows.map(row => JSON.parse(JSON.stringify(row)));
+}
+
+export async function createFeedback(feedback: {
+  id: string;
+  topic: string;
+  details?: string;
+}): Promise<void> {
+  await db.execute({
+    sql: `INSERT INTO feedback (id, topic, details) VALUES (?, ?, ?)`,
+    args: [feedback.id, feedback.topic, feedback.details || null],
+  });
+}
+
+export interface DbFeedback {
+  id: string;
+  topic: string;
+  details: string | null;
+  created_at: string;
+}
+
+export async function getAllFeedback(): Promise<DbFeedback[]> {
+  const result = await db.execute({
+    sql: "SELECT * FROM feedback ORDER BY created_at DESC",
     args: [],
   });
   return result.rows.map(row => JSON.parse(JSON.stringify(row)));

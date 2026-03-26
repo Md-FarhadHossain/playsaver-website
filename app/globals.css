@@ -77,10 +77,18 @@
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+  /* Dashboard Variables */
+  --phase-1: #F59E0B;
+  --phase-2: #3B82F6;
+  --phase-3: #8B5CF6;
+  --phase-4: #EF4444;
+  --bg-primary: #0A0A12;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --border-card: rgba(255, 255, 255, 0.08);
 }
 
 .dark {
@@ -127,4 +135,8 @@
   html {
     @apply font-sans;
   }
+}
+
+* {
+  scroll-behavior: smooth;
 }

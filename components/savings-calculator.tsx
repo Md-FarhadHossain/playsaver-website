@@ -37,14 +37,43 @@ export function SavingsCalculator() {
               </span>
             </div>
             
-            <Slider
-              value={[minutesPerDay]}
-              onValueChange={(val) => setMinutesPerDay(val[0])}
-              min={1}
-              max={120}
-              step={1}
-              className="mb-8"
-            />
+            <div className="mb-10 relative pt-2 pb-6">
+              <Slider
+                value={[minutesPerDay]}
+                onValueChange={(val) => setMinutesPerDay(val[0])}
+                min={1}
+                max={120}
+                step={1}
+                className="relative z-10"
+              />
+              
+              {/* Tick marks & labels */}
+              <div className="absolute top-4 left-0 right-0 pointer-events-none px-1.5 h-8">
+                <div className="relative w-full h-full">
+                  {/* Major ticks */}
+                  {[15, 30, 60, 90, 120].map((tick) => (
+                    <div
+                      key={`major-${tick}`}
+                      className="absolute h-full flex flex-col items-center -translate-x-1/2"
+                      style={{ left: `${((tick - 1) / 119) * 100}%` }}
+                    >
+                      <div className={`w-[2px] h-2.5 rounded-full mt-1 ${minutesPerDay >= tick ? 'bg-violet-500/60' : 'bg-border'}`} />
+                      <span className={`text-[10px] mt-1 font-medium ${minutesPerDay >= tick ? 'text-violet-600 dark:text-violet-400' : 'text-muted-foreground'}`}>{tick}</span>
+                    </div>
+                  ))}
+                  {/* Minor ticks */}
+                  {[5, 10, 20, 40, 50, 70, 80, 100, 110].map((tick) => (
+                    <div
+                      key={`minor-${tick}`}
+                      className="absolute h-full flex flex-col items-center -translate-x-1/2"
+                      style={{ left: `${((tick - 1) / 119) * 100}%` }}
+                    >
+                      <div className={`w-[2px] h-1.5 rounded-full mt-1.5 ${minutesPerDay >= tick ? 'bg-violet-500/40' : 'bg-border/50'}`} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             <div className="mb-8 flex flex-wrap gap-3">
               {PRESET_MINUTES.map((mins) => (
