@@ -105,13 +105,7 @@ export interface GamifiedUserStats {
   username: string;
   joinedAt: Date;
   totalMinutesSaved: number;
-  videosWatched: number;
-  currentStreak: number;
-  longestStreak: number;
-  avgSpeedUsed: number;
-  dailySaves: { date: string; minutesSaved: number }[];
   earnedBadges: string[];
-  lastActiveDate: Date;
 }
 
 import { UserStats, DbUser } from "./db";
@@ -126,66 +120,26 @@ function hashString(str: string): number {
   return Math.abs(hash);
 }
 
-// Generate deterministic gamified stats based on real DB data
+// Generate honest gamified stats based strictly on real DB data
 export function generateGamifiedStats(userStats: UserStats | null, dbUser: DbUser): GamifiedUserStats {
-  const hash = hashString(dbUser.id);
   const totalMinutesSaved = userStats ? Math.floor(userStats.total_ms / 60000) : 0;
-  
-  // Deterministic fake stats based on user ID and total minutes
-  const avgSpeedUsed = 1.25 + (hash % 75) / 100; // Between 1.25 and 2.00
-  const videosWatched = Math.floor(totalMinutesSaved / (avgSpeedUsed * 3)); // Rough estimate
-  
   const joinedAt = new Date(dbUser.created_at);
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const daysSinceJoin = Math.floor((new Date().getTime() - joinedAt.getTime()) / msPerDay);
-  
-  // Streak logic (faked based on recent activity, or just random hash)
-  const currentStreak = Math.min(daysSinceJoin, (hash % 14) + Math.floor(totalMinutesSaved / 500));
-  const longestStreak = currentStreak + (hash % 20);
 
-  // Earned badges logic
+  // Earned badges logic strictly based on real time saved
   const earnedBadges: string[] = [];
-  if (totalMinutesSaved > 0) earnedBadges.push('speed_starter');
-  if (avgSpeedUsed >= 1.5) earnedBadges.push('full_throttle');
-  if (videosWatched > 10) earnedBadges.push('turbo_mode');
-  if (currentStreak >= 3) earnedBadges.push('on_a_roll');
-  if (currentStreak >= 7) earnedBadges.push('week_warrior');
-  if (currentStreak >= 30) earnedBadges.push('streak_lord');
-  if (videosWatched >= 100) earnedBadges.push('century_club');
+  if (totalMinutesSaved >= 1) earnedBadges.push('speed_starter');
+  if (totalMinutesSaved >= 60) earnedBadges.push('week_warrior'); // Repurposed for 1h saved
+  if (totalMinutesSaved >= 300) earnedBadges.push('turbo_mode'); // Repurposed for 5h saved
+  if (totalMinutesSaved >= 600) earnedBadges.push('streak_lord'); // Repurposed for 10h saved
   if (totalMinutesSaved >= 3000) earnedBadges.push('deep_learner');
+  if (totalMinutesSaved >= 12000) earnedBadges.push('century_club'); // Repurposed for 200h saved
   if (totalMinutesSaved >= 600000) earnedBadges.push('hall_of_fame'); // Legend
-
-  // Generate some realistic-looking daily saves for the chart matching total_ms
-  const dailySaves = [];
-  let remainingMinutes = totalMinutesSaved;
-  const daysToDistribute = Math.min(30, daysSinceJoin || 1);
-  
-  for (let i = daysToDistribute - 1; i >= 0; i--) {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
-    
-    // Distribute remaining minutes semi-randomly but deterministically
-    const maxForDay = Math.min(remainingMinutes, Math.floor(totalMinutesSaved / (daysToDistribute * 0.5)));
-    const minsToday = i === 0 ? remainingMinutes : Math.floor((hash % 100) / 100 * maxForDay);
-    remainingMinutes -= minsToday;
-
-    dailySaves.push({
-      date: date.toISOString().split('T')[0],
-      minutesSaved: minsToday,
-    });
-  }
 
   return {
     userId: dbUser.id,
     username: dbUser.name || dbUser.email.split('@')[0],
     joinedAt,
     totalMinutesSaved,
-    videosWatched,
-    currentStreak,
-    longestStreak,
-    avgSpeedUsed,
-    dailySaves,
     earnedBadges,
-    lastActiveDate: new Date(),
   };
 }

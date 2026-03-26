@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { LOYALTY_MILESTONES } from "@/lib/productivity";
 import { Check } from "lucide-react";
@@ -10,110 +9,118 @@ interface LoyaltyTimelineProps {
 }
 
 export function LoyaltyTimeline({ joinedAt }: LoyaltyTimelineProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  
-  const today = new Date();
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const daysSinceJoin = Math.floor((today.getTime() - new Date(joinedAt).getTime()) / msPerDay);
+  const daysSinceJoin = Math.floor((Date.now() - new Date(joinedAt).getTime()) / 86400000);
 
-  // Auto-scroll to current milestone
-  useEffect(() => {
-    if (scrollRef.current) {
-      const activeElement = scrollRef.current.querySelector('[data-current="true"]');
-      if (activeElement) {
-        activeElement.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-      }
-    }
-  }, [daysSinceJoin]);
+  const activeIdx = LOYALTY_MILESTONES.reduce((acc, m, i) => (daysSinceJoin >= m.days ? i : acc), -1);
+  const nextIdx = activeIdx + 1 < LOYALTY_MILESTONES.length ? activeIdx + 1 : -1;
+  const futureIdx = nextIdx + 1 < LOYALTY_MILESTONES.length ? nextIdx + 1 : -1;
+
+  const items = [
+    ...(activeIdx >= 0 ? [{ type: "current", milestone: LOYALTY_MILESTONES[activeIdx] }] : []),
+    ...(nextIdx >= 0 ? [{ type: "next", milestone: LOYALTY_MILESTONES[nextIdx] }] : []),
+    ...(futureIdx >= 0 ? [{ type: "future", milestone: LOYALTY_MILESTONES[futureIdx] }] : []),
+  ];
+
+  // If new user, show first 3
+  if (items.length === 0) {
+    items.push(
+      { type: "next", milestone: LOYALTY_MILESTONES[0] },
+      { type: "future", milestone: LOYALTY_MILESTONES[1] },
+      { type: "future", milestone: LOYALTY_MILESTONES[2] }
+    );
+  }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-border/50 bg-card p-8 backdrop-blur-md transition-colors duration-300 shadow-sm">
-      <div className="mb-8">
-        <h2 className="text-xl font-bold text-foreground tracking-tight">Membership Journey</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          You've been with us for <strong className="text-foreground">{daysSinceJoin}</strong> days
-        </p>
+    <div className="flex flex-col rounded-[2rem] border border-border/60 bg-card p-6 shadow-sm transition-colors duration-300">
+      {/* ── HEADER ── */}
+      <div className="mb-6 flex items-center justify-between border-b border-border/40 pb-4">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">
+            Membership
+          </p>
+          <div className="flex items-baseline gap-2">
+            <h2 className="text-xl font-black text-foreground tracking-tight">
+              <span className="text-blue-500">{daysSinceJoin}</span> days 
+            </h2>
+          </div>
+        </div>
+        <div className="flex flex-col items-end">
+          <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Joined</span>
+          <span className="text-sm font-extrabold text-foreground">{new Date(joinedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+        </div>
       </div>
 
-      <div 
-        ref={scrollRef}
-        className="relative flex items-center justify-start gap-16 overflow-x-auto pb-8 pt-4 scrollbar-thin scrollbar-track-secondary scrollbar-thumb-muted-foreground/30 px-8"
-      >
-        {/* Track Line Background */}
-        <div className="absolute left-8 right-8 top-10 h-1 bg-border" />
+      {/* ── VERTICAL TIMELINE ── */}
+      <div className="relative pl-3 space-y-6">
+        {/* Connecting Line */}
+        {items.length > 1 && (
+          <div className="absolute left-[1.35rem] top-4 bottom-6 w-px bg-border group-hover:bg-border/80" />
+        )}
 
-        {LOYALTY_MILESTONES.map((milestone, index) => {
-          const isReached = daysSinceJoin >= milestone.days;
-          
-          // Find if this is the currently active milestone (reached, but next one isn't)
-          const nextMilestone = LOYALTY_MILESTONES[index + 1];
-          const isCurrentTarget = !isReached && (index === 0 || daysSinceJoin >= LOYALTY_MILESTONES[index - 1].days);
-          const isLatestReached = isReached && (!nextMilestone || daysSinceJoin < nextMilestone.days);
+        {items.map((item, i) => {
+          const isCurrent = item.type === "current";
+          const isNext = item.type === "next";
+          const isFuture = item.type === "future";
 
-          // Calculate line fill percentage to the next node
-          let lineFill = 0;
-          if (isReached && nextMilestone) {
-            if (daysSinceJoin >= nextMilestone.days) {
-              lineFill = 100;
-            } else {
-              const range = nextMilestone.days - milestone.days;
-              const progress = daysSinceJoin - milestone.days;
-              lineFill = (progress / range) * 100;
-            }
-          }
+          const ms = item.milestone;
 
           return (
-            <div 
-              key={milestone.id} 
-              className="relative flex flex-col items-center flex-shrink-0 w-24"
-              data-current={isLatestReached || isCurrentTarget}
+            <motion.div
+              key={ms.id}
+              className={`relative flex items-start gap-4 ${isFuture ? "opacity-50 grayscale" : ""}`}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: isFuture ? 0.4 : 1, x: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.1 }}
             >
-              {/* Active Track Line Segment */}
-              {index < LOYALTY_MILESTONES.length - 1 && (
-                <div 
-                  className="absolute left-1/2 top-6 h-1 bg-blue-500 transition-all duration-1000"
-                  style={{ width: `${lineFill}%`, minWidth: lineFill > 0 ? `calc(100% + 48px + 16px)` : 0, maxWidth: `calc(100% + 64px)` }}
-                />
-              )}
-
               {/* Node */}
-              <motion.div
-                className={`group relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-4 transition-all duration-500 ${
-                  isReached 
-                    ? "border-blue-500 bg-background shadow-[0_0_20px_rgba(59,130,246,0.3)]" 
-                    : isCurrentTarget
-                    ? "border-border/50 bg-background ring-2 ring-blue-500/50 ring-offset-4 ring-offset-background animate-pulse"
-                    : "border-border/50 bg-muted/50"
-                }`}
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-              >
-                {/* Checkmark overlay for reached */}
-                {isReached ? (
-                  <Check size={20} className="text-blue-500" />
+              <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-card ring-4 ring-card pt-0.5">
+                {isCurrent ? (
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 shadow-sm text-white">
+                    <Check size={14} strokeWidth={4} />
+                  </div>
+                ) : isNext ? (
+                  <div className="relative flex h-6 w-6 items-center justify-center rounded-full border-[3px] border-blue-500 bg-card">
+                    <span className="absolute inset-[-6px] rounded-full border-2 border-blue-500/30 animate-[ping_2s_ease-out_infinite]" />
+                  </div>
                 ) : (
-                  <span className="text-2xl grayscale opacity-40">{milestone.icon}</span>
+                  <div className="flex h-5 w-5 items-center justify-center rounded-full border-[2px] border-muted-foreground bg-muted" />
                 )}
-
-                {/* Tooltip */}
-                <div className="absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-popover px-4 py-2 text-center opacity-0 shadow-xl transition-all group-hover:-top-20 group-hover:opacity-100 ring-1 ring-border pointer-events-none z-50">
-                  <p className="text-sm font-bold text-popover-foreground">{milestone.title}</p>
-                  {isCurrentTarget ? (
-                    <p className="text-xs text-muted-foreground mt-1">{milestone.days - daysSinceJoin} days left</p>
-                  ) : (
-                    <p className="text-xs text-muted-foreground mt-1">{milestone.days} days required</p>
-                  )}
-                  <div className="absolute -bottom-1 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 bg-popover ring-1 ring-border border-t-0 border-l-0" />
-                </div>
-              </motion.div>
-
-              <div className="mt-4 text-center">
-                <span className={`block text-xs font-bold uppercase tracking-widest ${isReached ? "text-blue-500 dark:text-blue-400" : "text-muted-foreground"}`}>
-                  {milestone.label}
-                </span>
               </div>
-            </div>
+
+              {/* Data */}
+              <div className="flex-1 pt-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className={`text-sm font-black tracking-tight uppercase ${isCurrent ? "text-blue-500" : isNext ? "text-foreground" : "text-muted-foreground"}`}>
+                    {ms.label}
+                  </h3>
+                  {isNext && (
+                    <span className="inline-flex rounded-full bg-blue-500/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-blue-500 border border-blue-500/20">
+                      Target
+                    </span>
+                  )}
+                </div>
+                
+                <p className="mt-0.5 text-[11px] font-medium text-muted-foreground line-clamp-1">
+                  {ms.title}
+                </p>
+                
+                {isNext && (
+                  <p className="mt-1 text-[10px] font-bold text-muted-foreground/80">
+                    <span className="text-foreground">{ms.days - daysSinceJoin}</span> days away
+                  </p>
+                )}
+                {isCurrent && (
+                  <p className="mt-1 text-[10px] font-bold text-muted-foreground/80">
+                    Milestone achieved
+                  </p>
+                )}
+                {isFuture && (
+                  <p className="mt-1 text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                    {ms.days} Days Total
+                  </p>
+                )}
+              </div>
+            </motion.div>
           );
         })}
       </div>

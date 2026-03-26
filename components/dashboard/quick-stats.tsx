@@ -3,8 +3,6 @@
 import CountUp from "react-countup";
 import { Clock, PlaySquare, Zap } from "lucide-react";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 interface QuickStatsProps {
   minutesSaved: number;
@@ -12,78 +10,48 @@ interface QuickStatsProps {
   avgSpeedUsed: number;
 }
 
+// Kept for backward compatibility — the main stats display moved to the KPI row in dashboard-client
 export function QuickStats({ minutesSaved, videosWatched, avgSpeedUsed }: QuickStatsProps) {
   const hours = Math.floor(minutesSaved / 60);
-  const minutes = minutesSaved % 60;
-  
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mins = minutesSaved % 60;
 
-  const hoverBg = mounted && resolvedTheme === 'dark' 
-    ? "rgba(255, 255, 255, 0.08)" 
-    : "rgba(0, 0, 0, 0.03)";
+  const items = [
+    {
+      icon: <Clock size={18} />, label: "Time Reclaimed",
+      display: `${hours}h ${String(mins).padStart(2, "0")}m`,
+      end: hours, decimals: 0, suffix: "h", color: "blue",
+    },
+    {
+      icon: <PlaySquare size={18} />, label: "Videos",
+      display: `${videosWatched}`, end: videosWatched, decimals: 0, suffix: "", color: "violet",
+    },
+    {
+      icon: <Zap size={18} />, label: "Avg Speed",
+      display: `${avgSpeedUsed.toFixed(2)}×`, end: avgSpeedUsed, decimals: 2, suffix: "×", color: "amber",
+    },
+  ];
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-      {/* Time Saved Card */}
-      <motion.div 
-        className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-6 backdrop-blur-md transition-colors duration-300 shadow-sm"
-        whileHover={{ y: -4, backgroundColor: hoverBg }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 text-blue-500 dark:text-blue-400 ring-1 ring-blue-500/20 group-hover:bg-blue-500/20">
-          <Clock size={24} />
-        </div>
-        <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Total Reclaimed</p>
-        <div className="mt-1 flex items-baseline gap-1">
-          <span className="text-3xl font-extrabold text-foreground">
-            <CountUp end={hours} duration={2} />h{" "}
-            <CountUp end={minutes} duration={2} />m
-          </span>
-        </div>
-      </motion.div>
-
-      {/* Videos Watched Card */}
-      <motion.div 
-        className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-6 backdrop-blur-md transition-colors duration-300 shadow-sm"
-        whileHover={{ y: -4, backgroundColor: hoverBg }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-violet-500/10 text-violet-500 dark:text-violet-400 ring-1 ring-violet-500/20 group-hover:bg-violet-500/20">
-          <PlaySquare size={24} />
-        </div>
-        <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Videos Watched</p>
-        <div className="mt-1 flex items-baseline gap-1">
-          <span className="text-3xl font-extrabold text-foreground">
-            <CountUp end={videosWatched} duration={1.8} />
-          </span>
-          <span className="text-muted-foreground">videos</span>
-        </div>
-      </motion.div>
-
-      {/* Avg Speed Card */}
-      <motion.div 
-        className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-6 backdrop-blur-md transition-colors duration-300 shadow-sm"
-        whileHover={{ y: -4, backgroundColor: hoverBg }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/10 text-amber-500 dark:text-amber-400 ring-1 ring-amber-500/20 group-hover:bg-amber-500/20">
-          <Zap size={24} />
-        </div>
-        <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Avg Speed</p>
-        <div className="mt-1 flex items-baseline gap-1">
-          <span className="text-3xl font-extrabold text-foreground">
-            <CountUp end={avgSpeedUsed} decimals={2} duration={2.2} />×
-          </span>
-        </div>
-      </motion.div>
+    <div className="flex flex-col gap-3">
+      {items.map((item, i) => (
+        <motion.div
+          key={i}
+          className={`flex items-center gap-4 rounded-2xl border border-border/50 bg-card p-4 transition-all hover:border-border`}
+          initial={{ opacity: 0, x: 16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: i * 0.08, duration: 0.35 }}
+        >
+          <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-${item.color}-500/10 text-${item.color}-500`}>
+            {item.icon}
+          </div>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{item.label}</p>
+            <p className="text-xl font-extrabold text-foreground tabular-nums">
+              <CountUp end={item.end} decimals={item.decimals} suffix={item.suffix} duration={1.5} />
+            </p>
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 }

@@ -1,63 +1,75 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BADGES, Badge } from "@/lib/productivity";
+import { BADGES } from "@/lib/productivity";
 import { Lock } from "lucide-react";
 
 interface BadgeCollectionProps {
   earnedBadges: string[];
+  compact?: boolean;
 }
 
-export function BadgeCollection({ earnedBadges }: BadgeCollectionProps) {
+export function BadgeCollection({ earnedBadges, compact }: BadgeCollectionProps) {
   const earnedSet = new Set(earnedBadges);
+  const earned = BADGES.filter(b => earnedSet.has(b.id));
+  const locked = BADGES.filter(b => !earnedSet.has(b.id));
+  const sorted = [...earned, ...locked];
 
   return (
-    <div className="rounded-3xl border border-border/50 bg-card p-8 backdrop-blur-md transition-colors duration-300 shadow-sm">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-foreground tracking-tight">Achievements</h2>
-        <span className="text-sm font-medium text-muted-foreground">{earnedSet.size} / {BADGES.length} unlocked</span>
+    <div className="flex flex-col overflow-hidden rounded-3xl border border-border/50 bg-card transition-colors duration-300">
+      {/* Header */}
+      <div className="flex items-end justify-between px-6 pt-6 pb-4 border-b border-border/40">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Achievements</p>
+          <p className="text-2xl font-extrabold text-foreground leading-none">
+            {earned.length}
+            <span className="text-lg font-medium text-muted-foreground ml-1">/ {BADGES.length}</span>
+          </p>
+        </div>
+        {/* Earned emoji strip */}
+        <div className="flex flex-wrap gap-1 justify-end max-w-[100px]">
+          {earned.slice(0, 6).map(b => (
+            <span key={b.id} title={b.name} className="text-lg leading-none">{b.icon}</span>
+          ))}
+          {earned.length > 6 && (
+            <span className="self-center text-[10px] font-bold text-muted-foreground">+{earned.length - 6}</span>
+          )}
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        {BADGES.map((badge, idx) => {
+      {/* Badge grid */}
+      <div
+        className="grid grid-cols-3 gap-2.5 p-4 overflow-y-auto"
+        style={{ maxHeight: compact ? 272 : undefined }}
+      >
+        {sorted.map((badge, idx) => {
           const isEarned = earnedSet.has(badge.id);
-
           return (
             <motion.div
               key={badge.id}
-              className={`group relative flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all ${
-                isEarned 
-                  ? "border-blue-500/30 bg-blue-500/10 hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]" 
-                  : "border-border/50 bg-muted/50 grayscale opacity-50 hover:opacity-80"
+              className={`group relative flex flex-col items-center gap-1.5 rounded-xl border py-3 px-2 text-center cursor-default transition-all duration-200 ${
+                isEarned
+                  ? "border-border/40 bg-background hover:border-blue-500/40 hover:shadow-[0_2px_16px_rgba(59,130,246,0.12)]"
+                  : "border-border/20 bg-muted/20 opacity-35 grayscale"
               }`}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: isEarned ? 1 : 0.6, scale: 1 }}
-              transition={{ duration: 0.3, delay: idx * 0.05 }}
+              animate={{ opacity: isEarned ? 1 : 0.4, scale: 1 }}
+              transition={{ duration: 0.25, delay: idx * 0.02 }}
             >
-              {/* Unlock shimmer effect on hover if earned */}
-              {isEarned && (
-                <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                  <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-foreground/5 dark:via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-                </div>
-              )}
-
-              {/* Locked overlay */}
               {!isEarned && (
-                <div className="absolute right-2 top-2 rounded-full bg-muted-foreground/20 p-1">
-                  <Lock size={12} className="text-muted-foreground" />
-                </div>
+                <Lock size={9} className="absolute top-1.5 right-1.5 text-muted-foreground/40" />
               )}
-
-              <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-background/50 dark:bg-black/20 text-3xl shadow-inner ring-1 ring-border/50 group-hover:scale-110 transition-transform duration-300">
+              <span className="text-2xl leading-none group-hover:scale-110 transition-transform duration-200">
                 {badge.icon}
-              </div>
-              <h3 className={`text-sm font-bold ${isEarned ? "text-foreground" : "text-muted-foreground"}`}>
+              </span>
+              <span className={`text-[9px] font-bold leading-tight ${isEarned ? "text-foreground" : "text-muted-foreground"}`}>
                 {badge.name}
-              </h3>
-              
-              {/* Tooltip on hover */}
-              <div className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-popover px-3 py-1.5 text-xs font-medium text-popover-foreground shadow-xl opacity-0 transition-opacity group-hover:opacity-100 z-50 ring-1 ring-border">
+              </span>
+
+              {/* Tooltip */}
+              <div className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap rounded-lg border border-border bg-popover px-2.5 py-1 text-[11px] font-medium text-popover-foreground shadow-xl opacity-0 group-hover:opacity-100 transition-opacity">
                 {badge.condition}
+                <div className="absolute -bottom-[5px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 border-b border-r border-border bg-popover" />
               </div>
             </motion.div>
           );

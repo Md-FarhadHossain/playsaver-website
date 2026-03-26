@@ -1,99 +1,112 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { LEVELS } from "@/lib/productivity";
-import { CheckCircle2, Lock } from "lucide-react";
+import { Check, Lock } from "lucide-react";
 
 interface LevelJourneyProps {
   currentLevelId: number;
+  phaseColor: string;
 }
 
-export function LevelJourney({ currentLevelId }: LevelJourneyProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+export function LevelJourney({ currentLevelId, phaseColor }: LevelJourneyProps) {
+  const currentIndex = LEVELS.findIndex(l => l.id === currentLevelId);
+  if (currentIndex === -1) return null;
 
-  // Auto-scroll to current level on mount
-  useEffect(() => {
-    if (scrollRef.current) {
-      const activeElement = scrollRef.current.querySelector('[data-active="true"]');
-      if (activeElement) {
-        activeElement.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-      }
-    }
-  }, [currentLevelId]);
+  const currentLevel = LEVELS[currentIndex];
+  const nextLevel = LEVELS[currentIndex + 1];
+  const futureLevel = LEVELS[currentIndex + 2];
+
+  const items = [
+    { type: "current", level: currentLevel },
+    ...(nextLevel ? [{ type: "next", level: nextLevel }] : []),
+    ...(futureLevel ? [{ type: "future", level: futureLevel }] : []),
+  ];
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-card p-8 backdrop-blur-md transition-colors duration-300 shadow-sm">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-foreground tracking-tight">Level Journey</h2>
-        <span className="text-sm text-muted-foreground">{currentLevelId} / {LEVELS.length} unlocked</span>
+    <div className="flex flex-col rounded-[2rem] border border-border/60 bg-card p-6 shadow-sm transition-colors duration-300">
+      {/* ── HEADER ── */}
+      <div className="mb-6 flex items-center justify-between border-b border-border/40 pb-4">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">
+            Progression
+          </p>
+          <div className="flex items-baseline gap-2">
+            <h2 className="text-xl font-black text-foreground tracking-tight">
+              Level <span style={{ color: phaseColor }}>{currentLevel.id}</span>
+            </h2>
+          </div>
+        </div>
+        <div className="flex flex-col items-end">
+          <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Target</span>
+          <span className="text-sm font-extrabold text-foreground">{nextLevel ? `Lvl ${nextLevel.id}` : "MAX"}</span>
+        </div>
       </div>
 
-      {/* Horizontal Scroll Area */}
-      <div 
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-6 scrollbar-thin scrollbar-track-secondary scrollbar-thumb-muted-foreground/30 snap-x snap-mandatory"
-        style={{ scrollBehavior: 'smooth' }}
-      >
-        {LEVELS.map((level, index) => {
-          const isUnlocked = level.id <= currentLevelId;
-          const isCurrent = level.id === currentLevelId;
+      {/* ── VERTICAL LIST ── */}
+      <div className="relative pl-3 space-y-6">
+        {/* Connecting Line */}
+        {items.length > 1 && (
+          <div className="absolute left-[1.3rem] top-4 bottom-6 w-px bg-border group-hover:bg-border/80" />
+        )}
+
+        {items.map((item, i) => {
+          const isCurrent = item.type === "current";
+          const isNext = item.type === "next";
+          const isFuture = item.type === "future";
+
+          const col = isCurrent ? phaseColor : isNext ? "var(--color-blue-500)" : "var(--color-muted-foreground)";
 
           return (
             <motion.div
-              key={level.id}
-              data-active={isCurrent}
-              className={`relative flex-shrink-0 snap-center w-[260px] rounded-2xl border p-5 transition-all
-                ${isCurrent 
-                  ? "border-border shadow-xl dark:bg-white/10 bg-black/5" 
-                  : isUnlocked 
-                  ? "border-border/50 bg-background opacity-90" 
-                  : "border-border/10 bg-background opacity-40 grayscale"
-                }
-              `}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: isCurrent ? 1 : isUnlocked ? 0.9 : 0.5, scale: 1 }}
-              viewport={{ once: true }}
-              style={isCurrent ? { boxShadow: `0 0 30px ${level.color}30`, borderColor: level.color } : undefined}
+              key={item.level.id}
+              className={`relative flex items-start gap-4 ${isFuture ? "opacity-50 grayscale" : ""}`}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: isFuture ? 0.4 : 1, x: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.1 }}
             >
-              {isCurrent && (
-                <div className="absolute -inset-px rounded-2xl animate-pulse ring-2 ring-foreground/10" style={{ ringColor: level.color }} />
-              )}
-              
-              <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-foreground/10 text-xs font-bold font-mono text-foreground">
-                    {level.id}
-                  </span>
-                  <span className="text-xs font-bold uppercase tracking-wider" style={{ color: isUnlocked ? level.color : undefined }}>
-                    Phase {level.phase}
-                  </span>
-                </div>
-                {isUnlocked ? (
-                  <CheckCircle2 size={18} style={{ color: level.color }} />
+              {/* Node */}
+              <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-card ring-4 ring-card pt-0.5">
+                {isCurrent ? (
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full shadow-sm text-white" style={{ backgroundColor: phaseColor }}>
+                    <Check size={12} strokeWidth={4} />
+                  </div>
+                ) : isNext ? (
+                  <div className="relative flex h-5 w-5 items-center justify-center rounded-full border-[3px] border-blue-500 bg-card">
+                    <span className="absolute inset-[-6px] rounded-full border-2 border-blue-500/30 animate-[ping_2s_ease-out_infinite]" />
+                  </div>
                 ) : (
-                  <Lock size={18} className="text-muted-foreground" />
+                  <div className="flex h-4 w-4 items-center justify-center rounded-full border-[2px] border-muted-foreground bg-muted" />
                 )}
               </div>
 
-              <h3 className={`text-xl font-bold ${isUnlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
-                {level.name}
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
-                {level.subtitle}
-              </p>
-              
-              <div className="mt-4 text-xs font-medium text-muted-foreground/60 border-t border-border/50 pt-4">
-                {level.threshold.toLocaleString()} mins required
+              {/* Data */}
+              <div className="flex-1 pt-0.5">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className={`text-sm font-black tracking-tight ${isCurrent || isNext ? "text-foreground" : "text-muted-foreground"}`}>
+                    Level {item.level.id} · {item.level.name}
+                  </h3>
+                  {!isCurrent && (
+                    <Lock size={12} className="text-muted-foreground/40 shrink-0" />
+                  )}
+                </div>
+                <p className="mt-0.5 text-[11px] font-medium text-muted-foreground/80 line-clamp-1">
+                  {item.level.subtitle}
+                </p>
+                <div className="mt-1.5 flex items-center gap-2">
+                  <span className={`inline-block rounded-sm px-1.5 py-0.5 text-[8px] font-black uppercase tracking-widest ${isCurrent ? "text-white" : "bg-muted text-muted-foreground"}`}
+                        style={isCurrent ? { backgroundColor: phaseColor } : undefined}>
+                    Phase {item.level.phase}
+                  </span>
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                    {item.level.threshold >= 60 ? `${(item.level.threshold/60).toFixed(1).replace('.0','')}h threshold` : `${item.level.threshold}m threshold`}
+                  </span>
+                </div>
               </div>
             </motion.div>
           );
         })}
       </div>
-      
-      {/* Edge Gradients for scrolling */}
-      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-card to-transparent pointer-events-none transition-colors duration-300" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-card to-transparent pointer-events-none transition-colors duration-300" />
     </div>
   );
 }
