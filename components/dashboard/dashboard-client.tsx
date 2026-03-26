@@ -49,12 +49,12 @@ export function DashboardClient({ initialStats }: DashboardClientProps) {
       {/* ── HEADER ──────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/70 backdrop-blur-2xl">
         <div className="mx-auto flex h-14 max-w-screen-xl items-center justify-between px-5 gap-4">
-          <button onClick={handleLogoClick} className="flex items-center gap-2.5 group outline-none">
+          <div className="flex items-center gap-2.5 group outline-none">
             <img src="/logo.svg" alt="PlaySaver" className="h-7 w-7 transition-transform group-hover:scale-110 duration-200" />
             <span className="font-bold tracking-tight text-sm hidden sm:block">
               Play<span className="text-blue-500">Saver</span>
             </span>
-          </button>
+          </div>
 
           {/* User pill */}
           <div className="flex items-center gap-2.5 rounded-full border border-border bg-muted/30 px-3.5 py-1.5 text-xs font-medium backdrop-blur">

@@ -61,24 +61,14 @@ export interface Badge {
 }
 
 export const BADGES: Badge[] = [
-  // Speed badges
-  { id: 'speed_starter',  icon: '⚡', name: 'Speed Starter',  condition: 'First video at 1.5× or faster' },
-  { id: 'full_throttle',  icon: '🚀', name: 'Full Throttle',  condition: 'First video at 2× speed' },
-  { id: 'turbo_mode',     icon: '💨', name: 'Turbo Mode',     condition: 'Watch 10 videos at 2× speed' },
-  // Streak badges
-  { id: 'on_a_roll',      icon: '🔥', name: 'On a Roll',      condition: '3 videos in one day' },
-  { id: 'week_warrior',   icon: '📅', name: 'Week Warrior',   condition: 'Active 7 days in a row' },
-  { id: 'streak_lord',    icon: '💎', name: 'Streak Lord',    condition: '30 days active in a row' },
-  // Volume badges
-  { id: 'binge_learner',  icon: '📚', name: 'Binge Learner',  condition: '10 videos in one session' },
-  { id: 'century_club',   icon: '🎯', name: 'Century Club',   condition: '100 videos watched' },
-  { id: 'deep_learner',   icon: '🧠', name: 'Deep Learner',   condition: '50+ hours of lectures saved' },
-  // Time of day badges
-  { id: 'night_owl',      icon: '🌙', name: 'Night Owl',      condition: 'Save time after midnight' },
-  { id: 'early_bird',     icon: '☀️', name: 'Early Bird',     condition: 'Save time before 7 AM' },
-  // Special
-  { id: 'global_saver',   icon: '🌍', name: 'Global Saver',   condition: 'Save in 5 different topics' },
-  { id: 'hall_of_fame',   icon: '👑', name: 'Hall of Fame',   condition: 'Reach Time Legend rank' },
+  // Progression badges
+  { id: 'speed_starter',  icon: '⚡', name: 'Speed Starter',  condition: 'Save your first minute' },
+  { id: 'week_warrior',   icon: '⏱️', name: 'Hour Hacker',    condition: 'Save 1 full hour' },
+  { id: 'turbo_mode',     icon: '💨', name: 'Turbo Mover',    condition: 'Save 5 hours' },
+  { id: 'streak_lord',    icon: '💎', name: 'Time Master',    condition: 'Save 10 hours' },
+  { id: 'deep_learner',   icon: '🧠', name: 'Deep Learner',   condition: 'Save 50 hours' },
+  { id: 'century_club',   icon: '🎯', name: 'Century Club',   condition: 'Save 200 hours' },
+  { id: 'hall_of_fame',   icon: '👑', name: 'Hall of Fame',   condition: 'Reach Time Legend rank (10,000h)' },
 ];
 
 export interface LoyaltyMilestone {
