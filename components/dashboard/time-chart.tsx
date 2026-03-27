@@ -21,7 +21,7 @@ export function TimeChart({ data, phaseColor }: TimeChartProps) {
   const total = chartData.reduce((s, d) => s + d.minutesSaved, 0);
   const h = Math.floor(total / 60), m = total % 60;
 
-  const formatDate = (s: string) => { const d = new Date(s); return `${d.getMonth()+1}/${d.getDate()}`; };
+  const formatDate = (s: any) => { const d = new Date(s); return `${d.getMonth()+1}/${d.getDate()}`; };
   const isDark = mounted && resolvedTheme === "dark";
   const grid = isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)";
   const tick = isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)";
