@@ -1,378 +1,413 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SignInButton } from "@/components/auth/sign-in-button";
 import { UserMenu } from "@/components/auth/user-menu";
-import { Chrome, Clock, Zap, BarChart3, RefreshCw, Star, ArrowRight, Terminal } from "lucide-react";
+import { Chrome, Clock, Zap, BarChart3, RefreshCw, Star, Check, ChevronDown } from "lucide-react";
 import { SavingsCalculator } from "@/components/savings-calculator";
 import { SupportedPlatforms } from "@/components/supported-platforms";
 
 const SPEEDS = [
-  { label: "1.25×", bg: "bg-primary text-foreground", timeSaved: "20 min saved per hour", percent: "20%" },
-  { label: "1.5×", bg: "bg-accent text-foreground", timeSaved: "33 min saved per hour", percent: "33%" },
-  { label: "1.75×", bg: "bg-secondary text-foreground", timeSaved: "43 min saved per hour", percent: "43%" },
-  { label: "2×", bg: "bg-card text-foreground", timeSaved: "30 min saved per hour", percent: "50%" },
+  { label: "1.25×", color: "from-blue-500 to-cyan-400", timeSaved: "20 min saved per hour", percent: "20%" },
+  { label: "1.5×", color: "from-cyan-500 to-teal-400", timeSaved: "33 min saved per hour", percent: "33%" },
+  { label: "1.75×", color: "from-teal-500 to-emerald-400", timeSaved: "43 min saved per hour", percent: "43%" },
+  { label: "2×", color: "from-blue-400 to-teal-300", timeSaved: "30 min saved per hour", percent: "50%" },
 ];
 
 const FEATURES = [
   {
     icon: Clock,
-    title: "REAL-TIME TRACKING",
-    description: "See your time savings update live as you watch. No manual input required. <STATUS: AUTOMATED_SYNC>",
-    bg: "bg-primary text-foreground",
+    title: "Real-Time Tracking",
+    description: "See your time savings update live as you watch. No manual input required — PlaySaver works silently in the background.",
+    gradient: "from-blue-500/20 to-cyan-600/5",
+    iconColor: "text-blue-500",
   },
   {
     icon: BarChart3,
-    title: "DATA DASHBOARD",
-    description: "Daily, weekly, and all-time breakdowns. Clean charts to satisfy your analytic dopamine loops.",
-    bg: "bg-accent text-foreground",
+    title: "Beautiful Stats Dashboard",
+    description: "Daily, weekly, and all-time breakdowns of the time you've reclaimed. Clean charts you'll actually enjoy opening.",
+    gradient: "from-cyan-500/20 to-teal-600/5",
+    iconColor: "text-cyan-500",
   },
   {
     icon: RefreshCw,
-    title: "CROSS-DEVICE SYNC",
-    description: "Savings follow you everywhere. Sign in once and stats sync immediately on all Chrome instances.",
-    bg: "bg-secondary text-foreground",
+    title: "Cross-Device Sync",
+    description: "Your savings follow you everywhere. Sign in once and your stats sync seamlessly across all your Chrome sessions.",
+    gradient: "from-teal-500/20 to-emerald-600/5",
+    iconColor: "text-teal-500",
   },
   {
     icon: Zap,
-    title: "ZERO IMPACT",
-    description: "Feather-light operations. PlaySaver never drops frames or slows down your stream. <CPU_LOAD: 0.1%>",
-    bg: "bg-card text-foreground",
+    title: "Zero Performance Impact",
+    description: "Engineered to be feather-light. PlaySaver never slows down your browser or interrupts your viewing experience.",
+    gradient: "from-blue-400/20 to-cyan-500/5",
+    iconColor: "text-blue-400",
   },
 ];
 
 const FAQS = [
   {
     q: "Which sites does PlaySaver support?",
-    a: "PlaySaver works on every single website with video speed controls. YouTube, Netflix, Prime, Udemy, Coursera, Vimeo, etc. If it has a video tag, we track it.",
+    a: "PlaySaver works on every single website that has video speed controls! This includes popular platforms where you consume video content like YouTube, Netflix, Prime Video, Udemy, Coursera, Skillshare, MasterClass, Facebook Videos, Vimeo, LinkedIn Learning, and thousands more.",
   },
   {
     q: "Does it work for speeds below 1×?",
-    a: "Negative. PlaySaver focuses exclusively on speeds above 1× so your counter only increments. Time flows forward.",
+    a: "PlaySaver focuses only on speeds above 1× so your savings counter only goes up — never down.",
   },
   {
     q: "Is my data private?",
-    a: "Affirmative. Watch data remains local by default. Cloud sync is elective. We do not sell data packages.",
+    a: "Absolutely. Your watch data stays on your device by default. Cloud sync is optional and requires sign-in. We never sell your data.",
   },
   {
     q: "Is PlaySaver free?",
-    a: "The core extension is 100% free. Pro upgrades for extended telemetry data coming soon.",
+    a: "The core extension is completely free. A Pro plan with extended analytics and priority support is coming soon.",
   },
 ];
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-hidden selection:bg-primary selection:text-foreground">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden selection:bg-blue-500/30">
       {/* ─── Navbar ──────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 brutal-border border-x-0 border-t-0 bg-background">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          <a href="#" className="flex items-center gap-3 brutal-border p-1 bg-card hover:bg-primary transition-colors" aria-label="PlaySaver Home">
-            <span className="bg-foreground text-background font-black px-2 py-1 uppercase text-sm font-ai">PS_</span>
-            <span className="text-xl font-black uppercase tracking-tighter pr-2">
-              PlaySaver
+      <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <a href="#" className="flex items-center gap-2.5" aria-label="PlaySaver Home">
+            <img src="/logo.svg" alt="PlaySaver Logo" className="h-8 w-8 drop-shadow-md" />
+            <span className="text-lg font-bold tracking-tight text-foreground">
+              Play<span className="text-blue-500">Saver</span>
             </span>
           </a>
-          <nav className="hidden items-center gap-8 font-black uppercase tracking-widest text-foreground md:flex">
-            <a href="#how-it-works" className="hover:text-primary transition-colors hover:underline decoration-foreground decoration-4 underline-offset-4">How it works</a>
-            <a href="#features" className="hover:text-accent transition-colors hover:underline decoration-foreground decoration-4 underline-offset-4">Features</a>
-            <a href="#faq" className="hover:text-secondary transition-colors hover:underline decoration-foreground decoration-4 underline-offset-4">FAQ</a>
+          <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
+            <a href="#how-it-works" className="transition-colors hover:text-foreground">How it works</a>
+            <a href="#features" className="transition-colors hover:text-foreground">Features</a>
+            <a href="/blog" className="transition-colors hover:text-foreground">Blog</a>
+            <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
+            <a href="/feedback" className="transition-colors hover:text-foreground">Feedback</a>
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <ThemeToggle />
             <UserMenu />
-            <SignInButton className="hidden sm:flex brutal-button bg-card px-4 py-2" />
+            <SignInButton className="hidden sm:flex" />
             <a
               id="nav-cta"
               href="https://chrome.google.com/webstore"
               target="_blank"
               rel="noopener noreferrer"
-              className="brutal-button items-center gap-2 bg-primary px-5 py-2.5 text-sm hidden lg:flex hover:bg-secondary transition-colors text-foreground"
+              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95"
             >
-              <Chrome size={16} strokeWidth={3} className="text-foreground" />
-              INSTALL_NOW
+              <Chrome size={15} />
+              Add to Chrome
             </a>
           </div>
         </div>
       </header>
 
       <main className="relative isolate bg-background">
-        {/* ─── Abstract Brutalist Background ───────────────────── */}
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--color-border)_2px,transparent_2px),linear-gradient(to_bottom,var(--color-border)_2px,transparent_2px)] bg-[size:60px_60px] opacity-[0.2] dark:opacity-[0.1]" aria-hidden="true" />
-        
-        {/* Striped warning tape left/right */}
-        <div className="absolute left-0 top-0 bottom-0 w-2 md:w-4 bg-[repeating-linear-gradient(45deg,var(--color-primary),var(--color-primary)_10px,var(--color-foreground)_10px,var(--color-foreground)_20px)] border-r-4 border-foreground z-20" />
-        <div className="absolute right-0 top-0 bottom-0 w-2 md:w-4 bg-[repeating-linear-gradient(-45deg,var(--color-primary),var(--color-primary)_10px,var(--color-foreground)_10px,var(--color-foreground)_20px)] border-l-4 border-foreground z-20" />
+        {/* ─── Hero SaaS Background Effect ───────────────────────────── */}
+        <div className="absolute inset-x-0 top-0 -z-10 h-full overflow-hidden" aria-hidden="true">
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+          
+          {/* Vibrant Glowing Blobs */}
+          <div className="absolute -top-[5%] left-1/2 -z-10 h-[400px] w-[500px] -translate-x-1/2 rounded-full bg-blue-500/25 blur-3xl sm:-top-[10%] sm:h-[600px] sm:w-[800px] dark:bg-blue-500/20" />
+          <div className="absolute -left-[10%] top-[5%] -z-10 h-[300px] w-[400px] rounded-full bg-cyan-500/25 blur-3xl sm:h-[400px] sm:w-[500px] dark:bg-cyan-500/20" />
+          <div className="absolute -right-[10%] top-[10%] -z-10 h-[350px] w-[400px] rounded-full bg-teal-500/25 blur-3xl sm:h-[450px] sm:w-[500px] dark:bg-teal-500/20" />
+        </div>
 
         {/* ─── Hero ─────────────────────────────────────────────── */}
-        <section className="mx-auto max-w-7xl px-8 pt-20 pb-24 text-center md:pt-32 md:pb-32 relative">
-          
-          <div className="inline-flex items-center gap-2 brutal-border bg-accent px-4 py-1.5 text-sm font-black uppercase tracking-widest text-foreground brutal-shadow mb-8 origin-left -rotate-2">
-            <Terminal size={16} strokeWidth={3} /> V.1.0 // ONLINE
+        <section className="mx-auto max-w-7xl px-6 pt-24 pb-20 text-center md:pt-36 md:pb-28">
+          <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-500">
+            <Star size={12} fill="currentColor" /> Now available · Free
           </div>
 
-          <h1 className="mx-auto max-w-4xl text-6xl font-black uppercase leading-[0.95] tracking-tighter text-foreground md:text-8xl lg:text-[10rem] break-words">
-            WATCH <br className="hidden md:block"/> SMARTER
-          </h1>
-          
-          <div className="mt-8 flex justify-center">
-            <span className="brutal-border bg-secondary text-foreground text-3xl md:text-5xl lg:text-7xl font-black uppercase px-6 py-2 brutal-shadow rotate-1 transform-gpu">
-              RECLAIM TIME
+          <h1 className="mx-auto mt-6 max-w-3xl text-5xl font-extrabold leading-[1.1] tracking-tight text-foreground md:text-7xl">
+            Watch smarter.{" "}
+            <span className="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 bg-clip-text text-transparent">
+              Reclaim your time.
             </span>
-          </div>
+          </h1>
 
-          <p className="mx-auto mt-12 max-w-3xl text-xl font-bold uppercase leading-relaxed text-foreground md:text-2xl border-y-4 border-foreground py-6 bg-card px-4 brutal-shadow">
-            PlaySaver tracks exactly how many minutes you save by watching at 
-            <span className="bg-primary px-2 mx-2 border-2 border-foreground shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]">1.25×</span>
-            <span className="bg-accent px-2 mx-2 border-2 border-foreground shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]">1.5×</span>
-            <span className="bg-secondary px-2 mx-2 border-2 border-foreground shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]">2×</span>.
-            <br/>
-            Your time is an asset.
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            PlaySaver tracks exactly how many minutes and hours you&apos;ve reclaimed by watching videos at{" "}
+            <span className="font-semibold text-foreground">1.25×, 1.5×, 1.75× or 2×</span> speed.
+            One glance and you&apos;ll know your time is working for you.
           </p>
 
-          <div className="mt-14 flex flex-col items-center justify-center gap-6 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               id="hero-cta"
               href="https://chrome.google.com/webstore"
               target="_blank"
               rel="noopener noreferrer"
-              className="brutal-button flex w-full sm:w-auto items-center justify-center gap-3 bg-primary px-10 py-5 text-xl hover:bg-secondary text-foreground transition-colors"
+              className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-500/30 transition-all duration-200 hover:scale-105 hover:shadow-blue-500/50 active:scale-95"
             >
-              <Chrome size={28} strokeWidth={2.5} className="text-foreground" />
-              <span>ACQUIRE <span className="underline decoration-4 underline-offset-4">EXTENSION</span></span>
+              <Chrome size={20} />
+              Add to Chrome — It&apos;s Free
             </a>
             <a
               href="#how-it-works"
-              className="brutal-button flex w-full sm:w-auto items-center justify-center gap-2 bg-card px-8 py-5 text-xl group hover:bg-foreground hover:text-background transition-colors text-foreground"
+              className="flex items-center gap-2 rounded-full border border-border bg-background px-8 py-4 text-base font-semibold text-foreground transition-all duration-200 hover:bg-muted active:scale-95"
             >
-              VIEW_DOCS
-              <ArrowRight size={24} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+              See how it works
+              <ChevronDown size={16} />
             </a>
           </div>
 
-          {/* Faux review data */}
-          <div className="mt-16 inline-flex flex-col items-center gap-2 brutal-border bg-background p-4 mx-auto font-ai text-sm font-bold shadow-[8px_8px_0px_var(--color-foreground)]">
-            <div className="flex gap-1 border-b-2 border-foreground pb-2 w-full justify-center">
+          {/* Faux review strip */}
+          <div className="mt-12 flex flex-col items-center gap-1 text-sm text-muted-foreground">
+            <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={18} className="fill-foreground text-foreground" />
+                <Star key={i} size={14} fill="currentColor" className="text-teal-400" />
               ))}
             </div>
-            <span className="uppercase tracking-widest pt-1 bg-primary text-foreground px-2">DATA: 2,400+ ACTIVE USERS // RATING: 4.9</span>
+            <span>Loved by <strong className="text-foreground">2,400+</strong> productivity-focused users</span>
           </div>
         </section>
 
         <SupportedPlatforms />
 
         {/* ─── Speed Cards / How it Works ────────────────────────── */}
-        <section id="how-it-works" className="border-y-4 border-foreground py-20 bg-[linear-gradient(to_right,var(--color-muted)_2px,transparent_2px),linear-gradient(to_bottom,var(--color-muted)_2px,transparent_2px)] bg-[size:24px_24px]">
-          <div className="mx-auto max-w-7xl px-8">
-            <div className="mb-16 brutal-border bg-background p-8 brutal-shadow inline-block">
-              <h2 className="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-foreground mb-4">
-                SPEED = SAVINGS
+        <section id="how-it-works" className="bg-muted/30 border-y border-border/50 py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-14 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Your speed, your savings
               </h2>
-              <p className="max-w-xl text-xl font-bold uppercase font-ai text-foreground">
-                <span className="text-primary mr-2">{'>'}</span> System calculates delta between raw video length and accelerated playback duration.
+              <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+                Every time you bump up the playback speed, PlaySaver silently calculates and accumulates
+                the exact time you&apos;ve freed up.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {SPEEDS.map((s, idx) => (
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {SPEEDS.map((s) => (
                 <div
                   key={s.label}
-                  className={`brutal-card ${s.bg} transform-gpu hover:-translate-y-2 transition-transform duration-200 ${idx % 2 === 0 ? '-rotate-1' : 'rotate-1'}`}
+                  className="group relative overflow-hidden rounded-2xl border border-border/60 bg-background p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <div className="flex justify-between items-start mb-6 border-b-4 border-foreground pb-4">
-                    <span className="font-ai text-sm font-black tracking-widest uppercase bg-background text-foreground px-2 py-0.5 border-2 border-foreground">
-                      MUX: {s.label}
-                    </span>
-                    <Terminal size={20} strokeWidth={3} className="text-foreground" />
-                  </div>
-                  
-                  <div className="text-6xl font-black uppercase tracking-tighter mb-4 h-16 text-foreground">
+                  {/* top gradient bar */}
+                  <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${s.color}`} />
+
+                  <div className={`mb-4 inline-flex items-center justify-center rounded-xl bg-gradient-to-br ${s.color} p-3 text-3xl font-extrabold text-white shadow-md`}>
                     {s.label}
                   </div>
 
-                  <p className="text-lg font-bold uppercase mb-2 h-14 flex items-center leading-tight border-t-2 border-foreground border-dashed pt-2 text-foreground">
-                    {s.timeSaved}
-                  </p>
-                  
-                  {/* Hard progress bar */}
-                  <div className="mt-4 h-8 border-4 border-foreground bg-background relative overflow-hidden group">
+                  <p className="text-xl font-bold text-foreground">{s.timeSaved}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{s.percent} freed from every video</p>
+
+                  {/* progress bar */}
+                  <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted">
                     <div
-                      className="absolute left-0 top-0 bottom-0 bg-foreground group-hover:bg-accent transition-colors"
+                      className={`h-full rounded-full bg-gradient-to-r ${s.color} transition-all duration-700`}
                       style={{ width: s.percent }}
                     />
-                    <div className="absolute inset-0 flex items-center px-3 text-xs font-black font-ai mix-blend-difference text-white">
-                      {s.percent} CAPACITY
-                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* The math explained */}
-            <div className="mt-20 mx-auto max-w-3xl brutal-border bg-primary p-8 text-center brutal-shadow transform-gpu rotate-1">
-              <p className="text-sm font-black uppercase tracking-widest font-ai mb-4 border-b-4 border-foreground pb-2 inline-flex items-center gap-2 bg-background px-4 text-foreground">
-                <Zap size={14} className="fill-foreground text-foreground" /> ALGORITHM.EXE
+            <div className="mt-14 mx-auto max-w-2xl rounded-2xl border border-blue-400/20 bg-blue-500/5 p-6 text-center">
+              <p className="text-sm font-semibold uppercase tracking-widest text-blue-500">Simple maths, big results</p>
+              <p className="mt-3 text-4xl font-extrabold text-foreground">
+                1 hr at 1.5× = <span className="text-blue-500">20 min saved</span>
               </p>
-              <p className="mt-6 text-4xl md:text-5xl font-black uppercase text-foreground leading-[1.3]">
-                1 HR @ <span className="bg-background border-4 border-foreground px-3 mx-1 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">1.5×</span> = <br/>
-                <span className="text-background bg-foreground px-4 mt-4 inline-block transform-gpu -rotate-1 border-4 border-background">20 MIN RECLAIMED</span>
+              <p className="mt-2 text-muted-foreground">
+                Watch 4 hours of YouTube this week at 1.5× and you&apos;ve saved{" "}
+                <strong className="text-foreground">1 hour 20 minutes</strong> — back in your pocket.
               </p>
             </div>
 
-            <div className="mt-20 filter drop-shadow-[8px_8px_0px_var(--color-foreground)] bg-card border-4 border-foreground">
-              <SavingsCalculator />
+            <SavingsCalculator />
+          </div>
+        </section>
+
+        {/* ─── Extension Visual Breakdown ────────────────────────────── */}
+        <section id="how-it-works" className="py-24 relative overflow-hidden">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-20 text-center">
+              <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
+                See exactly how it works
+              </h2>
+              <p className="mx-auto mt-6 max-w-3xl text-lg text-muted-foreground">
+                PlaySaver is a smart extension that tracks exactly how much of your life you get back by watching YouTube videos at faster speeds, rewarding you with real-time stats and cloud-synced progress.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2 lg:gap-24">
+              {/* Left Side: The Image */}
+              <div className="relative lg:sticky lg:top-36">
+                <div className="absolute -inset-1 lg:-inset-4 rounded-[2.5rem] bg-gradient-to-tr from-blue-500/20 via-cyan-500/20 to-teal-500/20 blur-3xl opacity-70" aria-hidden="true" />
+                <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-background/50 backdrop-blur-xl shadow-2xl ring-1 ring-white/10">
+                  <div className="flex h-12 items-center gap-2 border-b border-border/50 bg-muted/30 px-5">
+                    <div className="flex gap-1.5">
+                      <div className="h-3.5 w-3.5 rounded-full bg-red-500/80" />
+                      <div className="h-3.5 w-3.5 rounded-full bg-amber-500/80" />
+                      <div className="h-3.5 w-3.5 rounded-full bg-emerald-500/80" />
+                    </div>
+                  </div>
+                  <img src="/extesion01.png" alt="PlaySaver Extension Interface" className="w-full h-auto" />
+                </div>
+              </div>
+
+              {/* Right Side: The Features Breakdown */}
+              <div className="space-y-12 py-4">
+                {/* 1 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-500 ring-1 ring-blue-500/40">1</div>
+                  <h3 className="text-2xl font-bold text-foreground">Time-Saved Tracking</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    The extension automatically detects when you watch a YouTube video at a faster playback speed (e.g., 1.5×, 2×) and calculates exactly how much real-world time you save.
+                  </p>
+                  <ul className="mt-5 space-y-3 text-base text-muted-foreground">
+                    <li><strong className="text-foreground">Total Time Saved:</strong> A lifetime counter showing total hours and minutes saved since installation.</li>
+                    <li><strong className="text-foreground">Saved Today:</strong> A daily counter that resets every midnight.</li>
+                  </ul>
+                </div>
+
+                {/* 2 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-cyan-500/10 text-sm font-bold text-cyan-500 ring-1 ring-cyan-500/40">2</div>
+                  <h3 className="text-2xl font-bold text-foreground">Live YouTube Overlay</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    While watching at a faster speed, a sleek, non-intrusive popup overlay sits on the YouTube video player itself (e.g., <code className="bg-muted px-1.5 py-0.5 rounded text-sm text-foreground">+3m 43s saved</code>).
+                  </p>
+                  <div className="mt-4 rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4">
+                    <p className="text-sm font-medium text-foreground italic">
+                      "It gives you a rewarding, real-time visual indicator of the exact time you are getting back by being productive."
+                    </p>
+                  </div>
+                </div>
+
+                {/* 3 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-teal-500/10 text-sm font-bold text-teal-500 ring-1 ring-teal-500/40">3</div>
+                  <h3 className="text-2xl font-bold text-foreground">Display Mode Controls</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    Control exactly when you see the popup overlay directly from the dashboard:
+                  </p>
+                  <ul className="mt-5 space-y-3 text-base text-muted-foreground">
+                    <li><strong className="text-foreground">Always On:</strong> Stays visible continuously while playing above normal speed.</li>
+                    <li><strong className="text-foreground">Middle & End:</strong> Flashes briefly at the 50% mark and at the very end for a distraction-free experience.</li>
+                    <li><strong className="text-foreground">Hidden:</strong> Turns off the overlay completely (time is still tracked silently).</li>
+                  </ul>
+                </div>
+
+                {/* 4 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/10 text-sm font-bold text-emerald-500 ring-1 ring-emerald-500/40">4</div>
+                  <h3 className="text-2xl font-bold text-foreground">Cloud Sync & Account</h3>
+                  <ul className="mt-4 space-y-3 text-base text-muted-foreground leading-relaxed">
+                    <li><strong className="text-foreground">Google Sign-In:</strong> Safe and secure one-click authentication.</li>
+                    <li><strong className="text-foreground">Cross-Device Sync:</strong> Time saved is automatically backed up. Switch computers or reinstall without losing progress.</li>
+                    <li><strong className="text-foreground">Dashboard Access:</strong> Quick button taking you to <code className="bg-muted px-1.5 py-0.5 rounded text-sm">playsaver.org/dashboard</code> to view deeper stats.</li>
+                  </ul>
+                </div>
+
+                {/* 5 */}
+                <div className="relative pl-10 md:pl-12">
+                  <div className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full bg-blue-500/10 text-sm font-bold text-blue-500 ring-1 ring-blue-500/40">5</div>
+                  <h3 className="text-2xl font-bold text-foreground">Smart Theming</h3>
+                  <p className="mt-3 text-lg text-muted-foreground leading-relaxed">
+                    The extension features a premium UI design that lets you toggle between Dark mode, Light mode, or automatically match your operating system's system settings.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* ─── Features ──────────────────────────────────────────── */}
-        <section id="features" className="py-24 relative overflow-hidden bg-background">
-          {/* Abstract graphic */}
-          <div className="absolute top-20 right-[-10%] opacity-10 dark:opacity-5 hidden lg:block select-none pointer-events-none">
-            <h1 className="text-[20rem] font-black uppercase leading-none transform-gpu -rotate-12">+TIME</h1>
-          </div>
-
-          <div className="mx-auto max-w-7xl px-8 relative z-10">
-            <div className="mb-16 inline-block brutal-border bg-accent p-6 brutal-shadow text-foreground">
-              <h2 className="text-4xl lg:text-6xl font-black uppercase tracking-tighter mb-2">
-                SYSTEM SPECS
+        <section id="features" className="py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-14 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Everything you need, nothing you don&apos;t
               </h2>
-              <p className="text-xl font-bold uppercase font-ai">
-                <span className="text-background mr-2">{'>'}</span> Optimized for maximal efficiency.
+              <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+                PlaySaver is laser-focused on one job: showing you how much time you save.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              {FEATURES.map((f, i) => (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {FEATURES.map((f) => (
                 <div
                   key={f.title}
-                  className={`brutal-card ${f.bg} flex flex-col hover:-translate-y-2 transition-transform duration-300 relative`}
+                  className={`group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br ${f.gradient} p-7 transition-all duration-300 hover:-translate-y-0.5 hover:border-border`}
                 >
-                  <div className="absolute -top-4 -right-4 bg-background border-4 border-foreground text-foreground font-ai font-black w-12 h-12 flex items-center justify-center text-xl z-10">
-                    0{i + 1}
+                  <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-background/60 backdrop-blur-sm`}>
+                    <f.icon size={22} className={f.iconColor} />
                   </div>
-                  <div className="flex justify-between border-b-4 border-foreground pb-4 mb-6">
-                    <div className="brutal-border bg-background p-3 brutal-shadow">
-                      <f.icon size={36} strokeWidth={2.5} className="text-foreground" />
-                    </div>
-                  </div>
-                  <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">{f.title}</h3>
-                  <p className="text-xl font-bold font-ai leading-relaxed flex-grow opacity-90 border-t-2 border-foreground border-dashed pt-4">
-                    {f.description}
-                  </p>
+                  <h3 className="text-lg font-bold text-foreground">{f.title}</h3>
+                  <p className="mt-2 leading-relaxed text-muted-foreground">{f.description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── Extension Visuals Split Section ────────────── */}
-        <section className="border-y-4 border-foreground">
-          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y-4 divide-foreground lg:divide-y-0 lg:divide-x-4">
-            {/* Left side info */}
-            <div className="bg-secondary text-foreground p-8 lg:p-16 flex flex-col justify-center">
-              <h2 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
-                LIVE TARGET ACQUISITION
-              </h2>
-              <div className="p-8 bg-background brutal-border text-foreground text-2xl font-bold font-ai leading-relaxed brutal-shadow rotate-1 transform-gpu">
-                <p><span className="text-primary">{'>'}</span> Extension embeds seamlessly into YouTube DOM.</p>
-                <div className="w-full h-1 bg-foreground my-4 opacity-20" />
-                <p><span className="text-primary">{'>'}</span> Overlay injects via ShadowDOM to prevent CSS conflicts.</p>
-                <div className="w-full h-1 bg-foreground my-4 opacity-20" />
-                <p className="text-background bg-foreground px-4 py-2 inline-block shadow-[4px_4px_0px_var(--color-primary)]">Displays savings in real-time.</p>
-              </div>
-            </div>
-            
-            {/* Right side image placeholder / UI mock */}
-            <div className="p-8 lg:p-16 bg-[repeating-linear-gradient(45deg,var(--color-muted),var(--color-muted)_10px,var(--color-background)_10px,var(--color-background)_20px)] flex items-center justify-center min-h-[400px]">
-              <div className="brutal-border bg-card brutal-shadow max-w-lg w-full relative group">
-                {/* Fake browser header */}
-                <div className="border-b-4 border-foreground p-4 flex gap-2 bg-muted items-center">
-                  <div className="w-4 h-4 bg-foreground rounded-none border-2 border-background" />
-                  <div className="w-4 h-4 bg-foreground rounded-none border-2 border-background" />
-                  <div className="w-4 h-4 bg-foreground rounded-none border-2 border-background" />
-                  <div className="ml-4 font-ai text-sm font-black bg-background border-2 border-foreground px-4 py-1 flex-1 text-foreground overflow-hidden whitespace-nowrap text-ellipsis">
-                    youtube.com/watch?v=brutal
-                  </div>
-                </div>
-                {/* Fake video body */}
-                <div className="aspect-video bg-background relative flex items-center justify-center p-4">
-                  {/* Video skeleton */}
-                  <div className="absolute inset-4 border-4 border-dashed border-foreground opacity-30 flex items-center justify-center">
-                    <div className="w-24 h-24 bg-foreground flex items-center justify-center pl-2 brutal-shadow">
-                      <div className="w-0 h-0 border-t-[15px] border-l-[30px] border-b-[15px] border-t-transparent border-l-background border-b-transparent" />
-                    </div>
-                  </div>
-                  {/* Brutal Overlay popup */}
-                  <div className="absolute top-6 left-6 brutal-border bg-primary px-4 py-2 font-black font-ai text-2xl z-10 text-foreground inline-flex shadow-[6px_6px_0px_#000] dark:shadow-[6px_6px_0px_#fff] group-hover:scale-105 transition-transform">
-                    <Zap className="mr-2 fill-foreground" size={28} /> +3M 43S
-                  </div>
-                  <div className="absolute bottom-6 right-6 font-ai bg-accent text-foreground border-4 border-foreground px-3 py-1 font-black z-10 text-2xl shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
-                    1.5×
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ─── Social Proof / Stats ──────────────────────────────── */}
-        <section className="bg-foreground py-16 text-background overflow-hidden relative">
-           <div className="flex w-[300%] animate-marquee gap-8 items-center border-y-4 border-background py-4 mb-16 opacity-70 font-ai uppercase text-3xl font-black">
-              <span>// 340K+ HOURS RECLAIMED</span>
-              <Star className="fill-background" size={24} />
-              <span>// NO TRACKING PIXELS</span>
-              <Star className="fill-background" size={24} />
-              <span>// ZERO SUBSCRIPTION FEES</span>
-              <Star className="fill-background" size={24} />
-              <span>// OPEN SOURCED EXTENSION</span>
-              <Star className="fill-background" size={24} />
-              <span>// 340K+ HOURS RECLAIMED</span>
-           </div>
-
-          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-10 px-8 text-center md:grid-cols-4 relative z-10">
+        <section className="border-y border-border/50 bg-muted/30 py-16">
+          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 text-center md:grid-cols-4">
             {[
-              { value: "2,400+", label: "ACTIVE AGENTS" },
-              { value: "340k+", label: "HOURS LOGGED" },
-              { value: "4.9★", label: "CHROME INDEX" },
-              { value: "100%", label: "COST TO USE" },
-            ].map((stat, i) => (
-              <div key={stat.label} className="border-l-8 border-background pl-6 text-left group">
-                <p className="text-5xl lg:text-6xl font-black mb-4 group-hover:text-primary transition-colors">{stat.value}</p>
-                <p className="text-sm font-ai font-black uppercase bg-background text-foreground inline-block px-3 py-1 brutal-border border-background group-hover:bg-primary group-hover:border-primary transition-colors">
-                  SYS_{i}: {stat.label}
-                </p>
+              { value: "2,400+", label: "Active users" },
+              { value: "340k+", label: "Hours saved" },
+              { value: "4.9★", label: "Chrome rating" },
+              { value: "100%", label: "Free forever" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p className="text-3xl font-extrabold text-foreground md:text-4xl">{stat.value}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* ─── Testimonials ──────────────────────────────────────── */}
-        <section className="py-24 bg-background">
-          <div className="mx-auto max-w-7xl px-8">
-            <h2 className="mb-12 inline-block bg-foreground text-background px-8 py-4 text-5xl lg:text-7xl font-black uppercase brutal-shadow translate-y-[-20%] drop-shadow-[8px_8px_0px_var(--color-primary)]">
-              USER LOGS
+        <section className="py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 className="mb-12 text-center text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              What people are saying
             </h2>
-            <div className="grid grid-cols-1 gap-12 md:grid-cols-3 mt-8">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {[
-                { name: "SARAH_M", text: "Watched entire Udemy catalog at 1.75×. Net +6 hours this month. Absurd roi." },
-                { name: "JAMES_CODE", text: "Brilliant UI. Seeing the numbers climb is highly gamified. Fully integrated into my workflow." },
-                { name: "PRIYA_TECH", text: "No bloat, just data. The aesthetic is loud but the performance footprint is zero." },
-              ].map((t, i) => (
-                <div key={t.name} className="brutal-card bg-card flex flex-col relative pt-12 transform-gpu hover:-rotate-2 transition-transform duration-300">
-                  <div className="absolute top-2 right-4 text-8xl font-serif leading-none italic opacity-10 text-foreground">"</div>
-                  <div className="absolute -top-6 -left-6 bg-primary text-foreground brutal-border px-4 py-2 font-ai text-sm font-black shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
-                    LOG_0{i+1}
-                  </div>
-                  <div className="flex gap-2 mb-6 bg-background inline-flex brutal-border px-3 py-2 w-fit">
-                    {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star key={idx} size={20} className="fill-foreground text-foreground" />
+                {
+                  name: "Sarah M.",
+                  handle: "@sarahlearns",
+                  text: "I watch all my Udemy courses at 1.75× and after a month PlaySaver told me I'd saved 6+ hours. Insane!",
+                  avatar: "SM",
+                  color: "from-blue-500 to-cyan-500",
+                },
+                {
+                  name: "James K.",
+                  handle: "@jkode",
+                  text: "Such a simple idea but it genuinely motivates me to watch at faster speeds because I can see the time piling up.",
+                  avatar: "JK",
+                  color: "from-cyan-500 to-teal-500",
+                },
+                {
+                  name: "Priya R.",
+                  handle: "@priyatech",
+                  text: "The UI is beautiful and it's the only extension I've kept enabled permanently. Lightweight and smart.",
+                  avatar: "PR",
+                  color: "from-blue-400 to-teal-400",
+                },
+              ].map((t) => (
+                <div
+                  key={t.name}
+                  className="rounded-2xl border border-border/60 bg-background p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                >
+                  <div className="mb-4 flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={13} fill="currentColor" className="text-teal-400" />
                     ))}
                   </div>
-                  <p className="text-2xl font-bold uppercase flex-grow leading-tight mb-8">
-                    {t.text}
-                  </p>
-                  <div className="border-t-4 border-foreground pt-6 mt-auto">
-                    <p className="text-xl font-black uppercase bg-accent text-foreground inline-block px-4 py-2 border-2 border-foreground">{t.name}</p>
+                  <p className="leading-relaxed text-muted-foreground">&ldquo;{t.text}&rdquo;</p>
+                  <div className="mt-5 flex items-center gap-3">
+                    <div className={`flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br ${t.color} text-xs font-bold text-white`}>
+                      {t.avatar}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                      <p className="text-xs text-muted-foreground">{t.handle}</p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -381,25 +416,16 @@ export default function Home() {
         </section>
 
         {/* ─── FAQ ───────────────────────────────────────────────── */}
-        <section id="faq" className="border-y-4 border-foreground py-24 bg-muted">
-          <div className="mx-auto max-w-3xl px-8">
-            <h2 className="mb-16 text-center">
-              <span className="text-5xl lg:text-7xl font-black uppercase text-foreground bg-primary px-6 py-2 inline-block border-4 border-foreground shadow-[8px_8px_0px_#000] dark:shadow-[8px_8px_0px_#fff] -rotate-1">
-                QUERY DATABASE
-              </span>
+        <section id="faq" className="border-t border-border/50 bg-muted/30 py-20">
+          <div className="mx-auto max-w-3xl px-6">
+            <h2 className="mb-10 text-center text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+              Frequently asked questions
             </h2>
-            <div className="space-y-8">
-              {FAQS.map((faq, idx) => (
-                <div key={idx} className="brutal-border bg-card brutal-shadow p-8 group hover:-translate-y-1 transition-transform bg-background">
-                  <div className="flex flex-col sm:flex-row gap-6 items-start">
-                    <span className="font-ai text-3xl font-black text-primary bg-foreground px-3 py-1">Q{idx+1}_</span>
-                    <div>
-                      <p className="text-2xl font-black uppercase mb-4 text-foreground">{faq.q}</p>
-                      <p className="text-lg font-bold font-ai bg-card border-l-8 border-accent p-4 text-foreground opacity-90">
-                        {faq.a}
-                      </p>
-                    </div>
-                  </div>
+            <div className="space-y-4">
+              {FAQS.map((faq) => (
+                <div key={faq.q} className="rounded-xl border border-border/60 bg-background p-6">
+                  <p className="font-semibold text-foreground">{faq.q}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -407,37 +433,44 @@ export default function Home() {
         </section>
 
         {/* ─── Final CTA ─────────────────────────────────────────── */}
-        <section className="py-32 bg-[radial-gradient(var(--color-border)_3px,transparent_3px)] bg-[size:40px_40px] bg-background">
-          <div className="mx-auto max-w-5xl px-8 text-center relative">
-            
-            {/* Decoration squares */}
-            <div className="absolute top-0 right-10 w-20 h-20 bg-accent brutal-border z-0 shadow-[8px_8px_0px_#000] dark:shadow-[8px_8px_0px_#fff] rotate-12" />
-            <div className="absolute bottom-10 left-10 w-16 h-16 bg-secondary brutal-border z-0 shadow-[8px_8px_0px_#000] dark:shadow-[8px_8px_0px_#fff] -rotate-12" />
+        <section className="py-24">
+          <div className="mx-auto max-w-4xl px-6 text-center">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-cyan-600 to-teal-600 p-12 shadow-2xl shadow-blue-500/30">
+              {/* decorative circles */}
+              <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+              <div aria-hidden className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
 
-            <div className="brutal-border bg-primary brutal-shadow p-12 lg:p-24 relative z-10 text-foreground transform-gpu -rotate-1">
-              
-              <div className="inline-flex items-center gap-3 bg-background border-4 border-foreground px-6 py-2 mb-10 font-ai font-black uppercase text-lg shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
-                <div className="w-4 h-4 bg-secondary border-2 border-foreground rounded-full animate-pulse" />
-                SYSTEM READY FOR DEPLOYMENT
-              </div>
-
-              <h2 className="text-6xl lg:text-8xl font-black uppercase tracking-tighter mb-8 leading-none">
-                EXECUTE FILE
+              <h2 className="relative text-3xl font-extrabold text-white md:text-5xl">
+                Start saving time today
               </h2>
-              <p className="mx-auto max-w-2xl text-3xl font-bold uppercase mb-14 bg-foreground text-background py-2">
-                Initiliaze PlaySaver directly via Chrome Web Store.
+              <p className="relative mx-auto mt-4 max-w-lg text-white/80">
+                Install PlaySaver in seconds and watch your reclaimed hours grow with every video you watch.
               </p>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <div className="relative mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                 <a
+                  id="bottom-cta"
                   href="https://chrome.google.com/webstore"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="brutal-button items-center justify-center gap-4 bg-secondary px-12 py-8 text-3xl hover:bg-foreground hover:text-background inline-flex text-foreground group"
+                  className="flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-base font-bold text-blue-600 shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
                 >
-                  <Chrome size={36} strokeWidth={2.5} className="group-hover:text-background" />
-                  INSTALL NOW <span className="font-ai text-xl bg-background text-foreground px-3 py-1 ml-2 border-2 border-foreground group-hover:bg-primary">FREE</span>
+                  <Chrome size={20} />
+                  Add to Chrome — Free
                 </a>
+              </div>
+
+              <p className="relative mt-5 text-sm text-white/60">
+                No account required · No credit card · Works instantly
+              </p>
+
+              <div className="relative mt-4 flex items-center justify-center gap-4 text-sm text-white/70">
+                {["Real-time tracking", "Dark & Light mode", "Privacy first"].map((tag) => (
+                  <span key={tag} className="flex items-center gap-1">
+                    <Check size={13} className="text-white/90" />
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -445,17 +478,19 @@ export default function Home() {
       </main>
 
       {/* ─── Footer ───────────────────────────────────────────── */}
-      <footer className="border-t-8 border-foreground bg-foreground text-background py-16">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-8 md:flex-row font-ai text-sm font-bold uppercase">
-          <div className="flex items-center gap-4 bg-background text-foreground border-4 border-foreground p-2 shadow-[4px_4px_0px_var(--color-primary)]">
-            <span className="bg-primary px-3 py-2 font-black border-2 border-foreground">PS_V1</span>
-            <span className="pr-3 text-lg">PLAY_SAVER</span>
+      <footer className="border-t border-border/50 py-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-sm text-muted-foreground md:flex-row">
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="PlaySaver Logo" className="h-6 w-6 drop-shadow-sm" />
+            <span className="font-semibold text-foreground">PlaySaver</span>
+            <span>— Watch smarter.</span>
           </div>
-          <p className="text-lg opacity-80">© {new Date().getFullYear()} PLAY_SAVER ORG. // SYSTEMS ONLINE.</p>
-          <div className="flex gap-8 underline decoration-4 underline-offset-8 text-lg">
-            <a href="/feedback" className="hover:text-primary transition-colors">FEEDBACK</a>
-            <a href="/privacy" className="hover:text-primary transition-colors">PRIVACY</a>
-            <a href="/terms" className="hover:text-primary transition-colors">TERMS</a>
+          <p>© {new Date().getFullYear()} PlaySaver. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="/feedback" className="transition-colors hover:text-foreground">Feedback</a>
+            <a href="/privacy" className="transition-colors hover:text-foreground">Privacy</a>
+            <a href="/terms" className="transition-colors hover:text-foreground">Terms</a>
+            <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Chrome Store</a>
           </div>
         </div>
       </footer>
