@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Slider } from "@/components/ui/slider";
-import { BookOpen, Code, Dumbbell } from "lucide-react";
+import { BookOpen, Code, Dumbbell, Terminal } from "lucide-react";
 
 const PRESET_MINUTES = [5, 15, 30, 60];
 
@@ -20,35 +20,42 @@ export function SavingsCalculator() {
   const codingProjects = Math.max(0, Math.floor(yearlyHours / 20)); // 20 hours per project
 
   return (
-    <div className="mx-auto mt-16 max-w-4xl space-y-8 px-4">
-      <div className="text-center">
-        <h3 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Visualize Your Savings</h3>
-        <p className="mt-4 text-lg text-muted-foreground">See how small daily changes compound into massive results over a year.</p>
+    <div className="mx-auto mt-16 max-w-4xl space-y-8 px-4 text-left">
+      <div className="mb-12 inline-block brutal-border bg-card p-6 brutal-shadow">
+        <h3 className="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-foreground mb-4">
+          DATA PROJECTION
+        </h3>
+        <p className="max-w-xl text-xl font-bold uppercase font-ai text-foreground">
+          <span className="text-primary mr-2">{'>'}</span> Calculate annual compounded time reclamation.
+        </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-12 md:grid-cols-2">
         {/* Interactive Left Side */}
-        <div className="flex flex-col justify-between rounded-2xl border border-violet-400/20 bg-background p-8 shadow-xl shadow-violet-500/5">
+        <div className="flex flex-col justify-between border-4 border-foreground bg-background p-8 brutal-shadow relative">
+          <div className="absolute top-0 right-0 bg-primary text-foreground font-ai font-black border-l-4 border-b-4 border-foreground px-3 py-1 text-sm uppercase">
+            CALCULATOR.EXE
+          </div>
           <div>
-            <div className="mb-8 flex items-center justify-between">
-              <span className="font-medium text-foreground">Time saved per day:</span>
-              <span className="rounded-full bg-violet-500/10 px-4 py-1.5 font-bold text-violet-600 dark:text-violet-400 transition-all duration-300">
-                {minutesPerDay} minutes
+            <div className="mb-12 flex flex-col items-start pt-6">
+              <span className="font-bold text-foreground text-xl uppercase mb-4">DAILY YIELD:</span>
+              <span className="border-4 border-foreground bg-accent px-6 py-2 text-4xl font-black text-foreground shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
+                {minutesPerDay} MIN/DAY
               </span>
             </div>
             
-            <div className="mb-10 relative pt-2 pb-6">
+            <div className="mb-12 relative pt-2 pb-6 px-2">
               <Slider
                 value={[minutesPerDay]}
                 onValueChange={(val) => setMinutesPerDay(val[0])}
                 min={1}
                 max={120}
                 step={1}
-                className="relative z-10"
+                className="relative z-10 py-4 cursor-pointer"
               />
               
               {/* Tick marks & labels */}
-              <div className="absolute top-4 left-0 right-0 pointer-events-none px-1.5 h-8">
+              <div className="absolute top-8 left-0 right-0 pointer-events-none px-3 h-8">
                 <div className="relative w-full h-full">
                   {/* Major ticks */}
                   {[15, 30, 60, 90, 120].map((tick) => (
@@ -57,95 +64,98 @@ export function SavingsCalculator() {
                       className="absolute h-full flex flex-col items-center -translate-x-1/2"
                       style={{ left: `${((tick - 1) / 119) * 100}%` }}
                     >
-                      <div className={`w-[2px] h-2.5 rounded-full mt-1 ${minutesPerDay >= tick ? 'bg-violet-500/60' : 'bg-border'}`} />
-                      <span className={`text-[10px] mt-1 font-medium ${minutesPerDay >= tick ? 'text-violet-600 dark:text-violet-400' : 'text-muted-foreground'}`}>{tick}</span>
+                      <div className={`w-1 h-3 mt-1 border border-foreground ${minutesPerDay >= tick ? 'bg-primary' : 'bg-muted'}`} />
+                      <span className={`text-xs mt-2 font-black font-ai ${minutesPerDay >= tick ? 'text-foreground' : 'text-muted-foreground'}`}>{tick}</span>
                     </div>
                   ))}
                   {/* Minor ticks */}
                   {[5, 10, 20, 40, 50, 70, 80, 100, 110].map((tick) => (
                     <div
                       key={`minor-${tick}`}
-                      className="absolute h-full flex flex-col items-center -translate-x-1/2"
+                      className="absolute h-full flex flex-col items-center -translate-x-1/2 hidden sm:flex"
                       style={{ left: `${((tick - 1) / 119) * 100}%` }}
                     >
-                      <div className={`w-[2px] h-1.5 rounded-full mt-1.5 ${minutesPerDay >= tick ? 'bg-violet-500/40' : 'bg-border/50'}`} />
+                      <div className={`w-0.5 h-2 mt-2 ${minutesPerDay >= tick ? 'bg-foreground' : 'bg-muted-foreground opacity-50'}`} />
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="mb-8 flex flex-wrap gap-3">
+            <div className="mb-10 flex flex-wrap gap-4 mt-8">
               {PRESET_MINUTES.map((mins) => (
                 <button
                   key={mins}
                   onClick={() => setMinutesPerDay(mins)}
-                  className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                  className={`border-4 border-foreground px-5 py-2 text-lg font-black font-ai uppercase transition-all ${
                     minutesPerDay === mins
-                      ? "bg-violet-600 text-white shadow-md shadow-violet-500/20 scale-105"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                      ? "bg-foreground text-background shadow-[4px_4px_0px_var(--color-primary)] translate-x-[-2px] translate-y-[-2px]"
+                      : "bg-card text-foreground hover:bg-muted shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]"
                   }`}
                 >
-                  {mins} mins
+                  {mins} MI
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="rounded-xl bg-violet-500/5 p-5 border border-violet-500/10">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Saving <strong className="text-violet-600 dark:text-violet-400">{minutesPerDay} minutes</strong> a day gives you back almost <strong className="text-violet-600 dark:text-violet-400">{yearlyDays} full days</strong> of your life every year.
+          <div className="bg-secondary p-5 border-4 border-foreground text-foreground shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_#fff]">
+            <p className="text-xl font-bold uppercase leading-snug">
+              Saving <span className="bg-background px-2 mx-1 border-2 border-foreground">{minutesPerDay}M</span> daily yields <span className="bg-foreground text-background px-2 mx-1">{yearlyDays} DAYS</span> of reclaimed lifespan annually.
             </p>
           </div>
         </div>
 
         {/* Results Right Side */}
-        <div className="flex flex-col justify-center gap-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="group rounded-xl border border-violet-500/20 bg-card p-5 transition-all hover:bg-violet-500/5 hover:border-violet-500/30">
-              <p className="text-xs font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400">In a Month</p>
-              <div className="mt-2 flex items-baseline gap-1">
-                <span className="text-3xl font-bold text-foreground tabular-nums">{monthlyHours}</span>
-                <span className="text-sm font-medium text-muted-foreground">hrs</span>
+        <div className="flex flex-col justify-center gap-6">
+          <div className="grid grid-cols-2 gap-6">
+            <div className="group border-4 border-foreground bg-card p-6 shadow-[6px_6px_0px_#000] dark:shadow-[6px_6px_0px_#fff] hover:bg-primary transition-colors">
+              <p className="text-sm font-black uppercase font-ai tracking-wider text-foreground mb-4 opacity-80">{'>'} MONTHLY_YIELD</p>
+              <div className="mt-2 flex items-end gap-2">
+                <span className="text-6xl font-black text-foreground tabular-nums leading-none tracking-tighter">{monthlyHours}</span>
+                <span className="text-xl font-black font-ai uppercase mb-1">HR</span>
               </div>
             </div>
-            <div className="group rounded-xl border border-fuchsia-500/20 bg-card p-5 transition-all hover:bg-fuchsia-500/5 hover:border-fuchsia-500/30">
-              <p className="text-xs font-semibold uppercase tracking-wider text-fuchsia-600 dark:text-fuchsia-400">In a Year</p>
-              <div className="mt-2 flex items-baseline gap-1">
-                <span className="text-3xl font-bold text-foreground tabular-nums">{yearlyHours}</span>
-                <span className="text-sm font-medium text-muted-foreground">hrs</span>
+            <div className="group border-4 border-foreground bg-card p-6 shadow-[6px_6px_0px_var(--color-secondary)] hover:bg-secondary transition-colors">
+              <p className="text-sm font-black uppercase font-ai tracking-wider text-foreground mb-4 opacity-80">{'>'} ANNUAL_YIELD</p>
+              <div className="mt-2 flex items-end gap-2">
+                <span className="text-6xl font-black text-foreground tabular-nums leading-none tracking-tighter">{yearlyHours}</span>
+                <span className="text-xl font-black font-ai uppercase mb-1">HR</span>
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-             <h4 className="mb-5 font-semibold text-foreground">What you could achieve in a year:</h4>
-             <ul className="space-y-5">
-               <li className="flex items-center gap-4 group cursor-default">
-                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-blue-600 transition-colors group-hover:bg-blue-500/20 dark:text-blue-400">
-                   <BookOpen className="h-6 w-6" />
+          <div className="border-4 border-foreground bg-background p-8 mt-4 brutal-shadow relative">
+             <div className="absolute top-0 right-0 p-2">
+               <Terminal size={24} className="text-foreground opacity-50" />
+             </div>
+             <h4 className="mb-8 text-2xl font-black uppercase">POTENTIAL VECTOR UTILIZATION:</h4>
+             <ul className="space-y-6">
+               <li className="flex items-start gap-4">
+                 <div className="flex h-14 w-14 mt-1 shrink-0 items-center justify-center border-4 border-foreground bg-accent text-foreground shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]">
+                   <BookOpen className="h-6 w-6 stroke-[3px]" />
                  </div>
                  <div>
-                   <p className="font-semibold text-foreground">Read <span className="tabular-nums text-blue-600 dark:text-blue-400">{booksRead}</span> books</p>
-                   <p className="text-sm text-muted-foreground mt-0.5">At 5 hours per book</p>
+                   <p className="text-xl font-bold uppercase text-foreground">Read <span className="text-2xl font-black font-ai border-b-4 border-accent px-1">{booksRead}</span> books</p>
+                   <p className="text-sm font-bold font-ai text-foreground mt-2 opacity-70">RUNTIME: 5 HR / BOOK</p>
                  </div>
                </li>
-               <li className="flex items-center gap-4 group cursor-default">
-                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-500/10 text-green-600 transition-colors group-hover:bg-green-500/20 dark:text-green-400">
-                   <Dumbbell className="h-6 w-6" />
+               <li className="flex items-start gap-4">
+                 <div className="flex h-14 w-14 mt-1 shrink-0 items-center justify-center border-4 border-foreground bg-primary text-foreground shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]">
+                   <Dumbbell className="h-6 w-6 stroke-[3px]" />
                  </div>
                  <div>
-                   <p className="font-semibold text-foreground">Complete <span className="tabular-nums text-green-600 dark:text-green-400">{workouts}</span> workouts</p>
-                   <p className="text-sm text-muted-foreground mt-0.5">At 1.5 hours per session</p>
+                   <p className="text-xl font-bold uppercase text-foreground">Complete <span className="text-2xl font-black font-ai border-b-4 border-primary px-1">{workouts}</span> workouts</p>
+                   <p className="text-sm font-bold font-ai text-foreground mt-2 opacity-70">RUNTIME: 1.5 HR / SESSION</p>
                  </div>
                </li>
-               <li className="flex items-center gap-4 group cursor-default">
-                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-500/10 text-orange-600 transition-colors group-hover:bg-orange-500/20 dark:text-orange-400">
-                   <Code className="h-6 w-6" />
+               <li className="flex items-start gap-4">
+                 <div className="flex h-14 w-14 mt-1 shrink-0 items-center justify-center border-4 border-foreground bg-secondary text-foreground shadow-[2px_2px_0px_#000] dark:shadow-[2px_2px_0px_#fff]">
+                   <Code className="h-6 w-6 stroke-[3px]" />
                  </div>
                  <div>
-                   <p className="font-semibold text-foreground">Build <span className="tabular-nums text-orange-600 dark:text-orange-400">{codingProjects}</span> projects</p>
-                   <p className="text-sm text-muted-foreground mt-0.5">At 20 hours per project</p>
+                   <p className="text-xl font-bold uppercase text-foreground">Build <span className="text-2xl font-black font-ai border-b-4 border-secondary px-1">{codingProjects}</span> projects</p>
+                   <p className="text-sm font-bold font-ai text-foreground mt-2 opacity-70">RUNTIME: 20 HR / PROJECT</p>
                  </div>
                </li>
              </ul>

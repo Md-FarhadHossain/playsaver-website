@@ -23,13 +23,13 @@ export function ThemeToggle() {
   return (
     <button
       onClick={cycle}
-      className="group relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-foreground backdrop-blur-sm transition-all duration-200 hover:bg-white/10 hover:scale-105 active:scale-95"
+      className="group relative flex h-10 w-10 items-center justify-center brutal-border bg-card text-foreground brutal-shadow transition-all duration-200"
       aria-label="Toggle theme"
       title={`Theme: ${theme}. Click to change.`}
     >
-      {theme === "dark" && <Moon size={16} className="text-violet-300" />}
-      {theme === "light" && <Sun size={16} className="text-amber-400" />}
-      {theme === "system" && <Monitor size={16} className="text-sky-400" />}
+      {theme === "dark" && <Moon size={20} className="text-foreground fill-primary" />}
+      {theme === "light" && <Sun size={20} className="text-foreground fill-primary" />}
+      {theme === "system" && <Monitor size={20} className="text-foreground stroke-[3px]" />}
     </button>
   );
 }
