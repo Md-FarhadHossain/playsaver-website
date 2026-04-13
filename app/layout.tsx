@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "PlaySaver — Watch Smarter, Reclaim Your Time",
   description:
     "PlaySaver is the Chrome extension that tracks exactly how much time you save by watching videos at faster speeds.",
+  verification: {
+    google: "eLSV8PXc5IqNWbz51iUSk158dMnyse2s4uwAAIS7cLs",
+  },
 };
 
 export default function RootLayout({
