@@ -87,7 +87,7 @@ export default function Home() {
             <SignInButton className="hidden sm:flex" />
             <a
               id="nav-cta"
-              href="https://chrome.google.com/webstore"
+              href="https://chromewebstore.google.com/detail/play-saver/fbaladgdmogmahlbpheiidmedefoaeoc"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-105 hover:shadow-blue-500/40 active:scale-95"
@@ -133,7 +133,7 @@ export default function Home() {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               id="hero-cta"
-              href="https://chrome.google.com/webstore"
+              href="https://chromewebstore.google.com/detail/play-saver/fbaladgdmogmahlbpheiidmedefoaeoc"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-500/30 transition-all duration-200 hover:scale-105 hover:shadow-blue-500/50 active:scale-95"
@@ -450,7 +450,7 @@ export default function Home() {
               <div className="relative mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                 <a
                   id="bottom-cta"
-                  href="https://chrome.google.com/webstore"
+                  href="https://chromewebstore.google.com/detail/play-saver/fbaladgdmogmahlbpheiidmedefoaeoc"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-base font-bold text-blue-600 shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
@@ -490,7 +490,7 @@ export default function Home() {
             <a href="/feedback" className="transition-colors hover:text-foreground">Feedback</a>
             <a href="/privacy" className="transition-colors hover:text-foreground">Privacy</a>
             <a href="/terms" className="transition-colors hover:text-foreground">Terms</a>
-            <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Chrome Store</a>
+            <a href="https://chromewebstore.google.com/detail/play-saver/fbaladgdmogmahlbpheiidmedefoaeoc" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Chrome Store</a>
           </div>
         </div>
       </footer>
