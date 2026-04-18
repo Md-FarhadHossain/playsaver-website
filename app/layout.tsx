@@ -10,9 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PlaySaver — Watch Smarter, Reclaim Your Time",
+  title: "PlaySaver - Watch Smarter, Reclaim Your Time",
   description:
     "PlaySaver is the Chrome extension that tracks exactly how much time you save by watching videos at faster speeds.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   verification: {
     google: "eLSV8PXc5IqNWbz51iUSk158dMnyse2s4uwAAIS7cLs",
   },

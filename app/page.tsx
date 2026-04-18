@@ -112,7 +112,33 @@ export default function Home() {
         </div>
 
         {/* ─── Hero ─────────────────────────────────────────────── */}
-        <section className="mx-auto max-w-7xl px-6 pt-24 pb-20 text-center md:pt-36 md:pb-28">
+        <section className="mx-auto max-w-7xl px-6 pt-12 pb-20 text-center md:pt-20 md:pb-28">
+          <div className="mb-6 flex justify-center">
+            <a 
+              href="https://www.producthunt.com/products/play-saver?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-play-saver" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="transition-transform hover:scale-105 active:scale-95"
+            >
+              {/* Light mode badge */}
+              <img 
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1126007&theme=light&t=1776500782944" 
+                alt="Play Saver - Watch Smarter, Reclaim Your Time | Product Hunt" 
+                className="h-[54px] w-[250px] dark:hidden block" 
+                width="250" 
+                height="54" 
+              />
+              {/* Dark mode badge */}
+              <img 
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1126007&theme=neutral&t=1776500782944" 
+                alt="Play Saver - Watch Smarter, Reclaim Your Time | Product Hunt" 
+                className="h-[54px] w-[250px] hidden dark:block" 
+                width="250" 
+                height="54" 
+              />
+            </a>
+          </div>
+
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-500">
             <Star size={12} fill="currentColor" /> Now available · Free
           </div>

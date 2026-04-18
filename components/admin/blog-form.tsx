@@ -19,15 +19,16 @@ export function BlogForm({ blog }: { blog?: DbBlog }) {
 
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const selectedText = content.substring(start, end);
-    const newText = content.substring(0, start) + before + selectedText + after + content.substring(end);
+    const value = textarea.value;
+    const selectedText = value.substring(start, end);
+    const newText = value.substring(0, start) + before + selectedText + after + value.substring(end);
     
     setContent(newText);
     
     setTimeout(() => {
       textarea.focus();
-      textarea.setSelectionRange(start + before.length, end + before.length + selectedText.length);
-    }, 0);
+      textarea.setSelectionRange(start + before.length, start + before.length + selectedText.length);
+    }, 10);
   };
 
   const handleImageInsert = () => {
@@ -38,7 +39,13 @@ export function BlogForm({ blog }: { blog?: DbBlog }) {
   };
 
   const ToolbarButton = ({ icon: Icon, onClick, title }: any) => (
-    <button type="button" onClick={onClick} title={title} className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition border border-transparent hover:border-border">
+    <button 
+      type="button" 
+      onClick={onClick} 
+      onMouseDown={(e) => e.preventDefault()}
+      title={title} 
+      className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition border border-transparent hover:border-border"
+    >
       <Icon size={16} />
     </button>
   );
